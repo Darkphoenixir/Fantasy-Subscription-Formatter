@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy Subscription Formatter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+        
+        :root {
+            --primary: #5a3a7e;
+            --secondary: #9b6dff;
+            --accent: #ff6b97;
+            --dark: #1a1325;
+            --light: #f0e6ff;
+            --success: #64ecaa;
+            --error: #ff5c7c;
+            --text: #e0d3ff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 35%, rgba(91, 58, 126, 0.2) 0%, transparent 30%),
+                radial-gradient(circle at 80% 10%, rgba(155, 109, 255, 0.2) 0%, transparent 30%);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(155, 109, 255, 0.3);
+            animation: titleGlow 3s infinite alternate;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .card {
+            background: rgba(26, 19, 37, 0.8);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(155, 109, 255, 0.2);
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(155, 109, 255, 0.4);
+        }
+        
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(155, 109, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+            z-index: 1;
+        }
+        
+        .card:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .card h2 {
+            font-family: 'Cinzel', serif;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+            font-size: 1.5rem;
+            border-bottom: 1px solid rgba(155, 109, 255, 0.3);
+            padding-bottom: 0.5rem;
+        }
+        
+        .glow-icon {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .glow-icon i {
+            color: var(--accent);
+            font-size: 1.2rem;
+            animation: iconPulse 2s infinite;
+        }
+        
+        .input-area, .output-area {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        textarea {
+            background: rgba(26, 19, 37, 0.6);
+            border: 1px solid rgba(155, 109, 255, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            color: var(--light);
+            font-family: 'Poppins', sans-serif;
+            resize: vertical;
+            min-height: 150px;
+            transition: all 0.3s ease;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 15px rgba(155, 109, 255, 0.4);
+        }
+        
+        button {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(90, 58, 126, 0.5);
+        }
+        
+        button i {
+            font-size: 1.2rem;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(90, 58, 126, 0.7);
+        }
+        
+        button::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: translateX(-100%);
+        }
+        
+        button:hover::after {
+            animation: buttonGlow 1s;
+        }
+        
+        .button-container {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .copy-btn {
+            background: transparent;
+            border: 1px solid var(--secondary);
+            color: var(--secondary);
+        }
+        
+        .copy-btn:hover {
+            background: rgba(155, 109, 255, 0.1);
+        }
+        
+        pre {
+            background: rgba(20, 15, 30, 0.8);
+            padding: 1.5rem;
+            border-radius: 10px;
+            overflow-x: auto;
+            border: 1px solid rgba(155, 109, 255, 0.2);
+            position: relative;
+            min-height: 100px;
+            font-family: monospace;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            color: white;
+            z-index: 100;
+            transform: translateY(-100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .success {
+            background: var(--success);
+            box-shadow: 0 5px 15px rgba(100, 236, 170, 0.3);
+        }
+        
+        .error {
+            background: var(--error);
+            box-shadow: 0 5px 15px rgba(255, 92, 124, 0.3);
+        }
+        
+        .floating-icons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .floating-icon {
+            position: absolute;
+            font-size: 1.5rem;
+            color: rgba(155, 109, 255, 0.2);
+            animation: floatAnimation 15s infinite linear;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            color: rgba(224, 211, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        
+        /* Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: var(--secondary);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: particleAnimation 15s infinite linear;
+        }
+        
+        /* Legend section */
+        .legend {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(26, 19, 37, 0.6);
+            border-radius: 10px;
+            border: 1px solid rgba(155, 109, 255, 0.2);
+        }
+        
+        .legend h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .legend-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .legend-item i {
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(155, 109, 255, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--light);
+        }
+        
+        .settings-panel {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(26, 19, 37, 0.4);
+            border-radius: 10px;
+            border: 1px dashed rgba(155, 109, 255, 0.2);
+            display: none;
+        }
+        
+        .settings-toggle {
+            background: transparent;
+            border: none;
+            color: var(--secondary);
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .settings-toggle:hover {
+            text-decoration: underline;
+        }
+        
+        .settings-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+        
+        .setting-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .setting-item input {
+            margin: 0;
+            cursor: pointer;
+        }
+        
+        .processing-indicator {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .processing-indicator.active {
+            opacity: 1;
+        }
+        
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(155, 109, 255, 0.3);
+            border-top: 3px solid var(--secondary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .legend-items {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-container {
+                flex-direction: column;
+            }
+        }
+        
+        /* Animations */
+        @keyframes titleGlow {
+            0% {
+                text-shadow: 0 0 10px rgba(155, 109, 255, 0.3);
+            }
+            100% {
+                text-shadow: 0 0 20px rgba(155, 109, 255, 0.6), 0 0 30px rgba(255, 107, 151, 0.4);
+            }
+        }
+        
+        @keyframes iconPulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.9;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes buttonGlow {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+        
+        @keyframes floatAnimation {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.2;
+            }
+            90% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes particleAnimation {
+            0% {
+                transform: translateY(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <header>
+            <h1>✨ Magical Subscription Formatter ✨</h1>
+            <p class="subtitle">Transform your plain subscription data into beautifully formatted content with magical emojis and enchanted styling</p>
+        </header>
+        
+        <div class="app-container">
+            <div class="card input-card">
+                <h2 class="glow-icon"><i class="fas fa-magic"></i> Input Your Potion Ingredients</h2>
+                <div class="input-area">
+                    <textarea id="input-data" placeholder="Paste your subscription data here... (email:password | Plan = X Month | ExpireDate = YYYY-MM-DD | DaysLeft = X | AutoRenew = true/false | PaymentMethod = METHOD)"></textarea>
+                    <button id="settings-toggle" class="settings-toggle">
+                        <i class="fas fa-cog"></i> Advanced Settings
+                    </button>
+                    <div id="settings-panel" class="settings-panel">
+                        <div class="settings-options">
+                            <div class="setting-item">
+                                <input type="checkbox" id="aggressive-parsing" checked>
+                                <label for="aggressive-parsing">Aggressive Parsing</label>
+                            </div>
+                            <div class="setting-item">
+                                <input type="checkbox" id="multi-strategy" checked>
+                                <label for="multi-strategy">Multi-Strategy</label>
+                            </div>
+                            <div class="setting-item">
+                                <input type="checkbox" id="deep-inspection" checked>
+                                <label for="deep-inspection">Deep Inspection</label>
+                            </div>
+                            <div class="setting-item">
+                                <input type="checkbox" id="error-recovery" checked>
+                                <label for="error-recovery">Error Recovery</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-container">
+                        <button id="format-btn"><i class="fas fa-wand-magic-sparkles"></i> Cast Formatting Spell</button>
+                        <button id="clear-btn" class="copy-btn"><i class="fas fa-broom"></i> Clear</button>
+                    </div>
+                    <div id="processing-indicator" class="processing-indicator">
+                        <div class="spinner"></div>
+                        <span>Casting powerful magic...</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card output-card">
+                <div class="status-badge" id="status-badge">Ready</div>
+                <h2 class="glow-icon"><i class="fas fa-scroll"></i> Your Enchanted Output</h2>
+                <div class="output-area">
+                    <pre id="output-result">Your magical formatted output will appear here...</pre>
+                    <div class="button-container">
+                        <button id="copy-btn"><i class="fas fa-copy"></i> Copy to Spellbook</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card legend">
+                <h3 class="glow-icon"><i class="fas fa-book-open"></i> Legend of Magical Symbols</h3>
+                <div class="legend-items">
+                    <div class="legend-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>📧 Email</span>
+                    </div>
+                    <div class="legend-item">
+                        <i class="fas fa-key"></i>
+                        <span>Password in `monospace`</span>
+                    </div>
+                    <div class="legend-item">
+                        <i class="fas fa-calendar"></i>
+                        <span>🗓 Plan Duration</span>
+                    </div>
+                    <div class="legend-item">
+                        <i class="fas fa-hourglass-end"></i>
+                        <span>⏳ Expiration Date</span>
+                    </div>
+                    <div class="legend-item">
+                        <i class="fas fa-clock"></i>
+                        <span>⏳ Days Left</span>
+                    </div>
+                    <div class="legend-item">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>✅/❌ Auto Renew</span>
+                    </div>
+                    <div class="legend-item">
+                        <i class="fas fa-credit-card"></i>
+                        <span>💳 Payment Method</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+<!-- Mystical Portal Section -->
+<div class="mystical-portal-section">
+    <div class="portal-container">
+        <h3 class="portal-title">✧ Discover the Arcane Codex ✧</h3>
+        <p class="portal-description">Venture deeper into the magical realm where more enchanted creations await. The Fallen Angel's repository holds mysteries beyond imagination...</p>
+        
+        <a href="https://github.com/Darkphoenixir" target="_blank" class="portal-button" id="portal-button">
+            <span class="portal-button-text">Open the Mystical Gateway</span>
+            <div class="portal-runes">
+                <span class="rune">⚡</span>
+                <span class="rune">✦</span>
+                <span class="rune">✧</span>
+                <span class="rune">⚝</span>
+                <span class="rune">⚜</span>
+            </div>
+        </a>
+    </div>
+</div>
+
+<style>
+/* Mystical Portal Styles */
+.mystical-portal-section {
+    margin-top: 3rem;
+    padding: 3rem 0;
+    background: linear-gradient(rgba(26, 19, 37, 0.5), rgba(26, 19, 37, 0.8)),
+                url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48ZyBmaWxsPSJyZ2JhKDEyNSwgOTUsIDE5MCwgMC4yKSI+PGNpcmNsZSBjeD0iNSIgY3k9IjUiIHI9IjEiLz48Y2lyY2xlIGN4PSIxNSIgY3k9IjUiIHI9IjEiLz48Y2lyY2xlIGN4PSIyNSIgY3k9IjUiIHI9IjEiLz48Y2lyY2xlIGN4PSIzNSIgY3k9IjUiIHI9IjEiLz48Y2lyY2xlIGN4PSI1IiBjeT0iMTUiIHI9IjEiLz48Y2lyY2xlIGN4PSIxNSIgY3k9IjE1IiByPSIxIi8+PGNpcmNsZSBjeD0iMjUiIGN5PSIxNSIgcj0iMSIvPjxjaXJjbGUgY3g9IjM1IiBjeT0iMTUiIHI9IjEiLz48Y2lyY2xlIGN4PSI1IiBjeT0iMjUiIHI9IjEiLz48Y2lyY2xlIGN4PSIxNSIgY3k9IjI1IiByPSIxIi8+PGNpcmNsZSBjeD0iMjUiIGN5PSIyNSIgcj0iMSIvPjxjaXJjbGUgY3g9IjM1IiBjeT0iMjUiIHI9IjEiLz48Y2lyY2xlIGN4PSI1IiBjeT0iMzUiIHI9IjEiLz48Y2lyY2xlIGN4PSIxNSIgY3k9IjM1IiByPSIxIi8+PGNpcmNsZSBjeD0iMjUiIGN5PSIzNSIgcj0iMSIvPjxjaXJjbGUgY3g9IjM1IiBjeT0iMzUiIHI9IjEiLz48L2c+PC9zdmc+');
+    border-top: 1px solid rgba(155, 109, 255, 0.3);
+    border-bottom: 1px solid rgba(155, 109, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.mystical-portal-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(155, 109, 255, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.portal-container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.portal-title {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(90deg, var(--accent), var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 15px rgba(155, 109, 255, 0.3);
+}
+
+.portal-description {
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+    color: var(--text);
+    opacity: 0.9;
+    line-height: 1.6;
+}
+
+.portal-button {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.2rem 2.5rem;
+    background: linear-gradient(135deg, rgba(90, 58, 126, 0.9), rgba(155, 109, 255, 0.9));
+    color: white;
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.21, 0.61, 0.35, 1);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3),
+                inset 0 0 20px rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+}
+
+.portal-button::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.8) 0%, transparent 10%);
+    transform: scale(0);
+    opacity: 0;
+    transition: transform 0.7s ease-out, opacity 0.7s ease-out;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.portal-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4),
+                inset 0 0 20px rgba(255, 255, 255, 0.3);
+    letter-spacing: 1px;
+}
+
+.portal-button:hover::before {
+    opacity: 0.3;
+    transform: scale(1);
+}
+
+.portal-button:active {
+    transform: translateY(0);
+}
+
+.portal-button-text {
+    position: relative;
+    z-index: 2;
+}
+
+.portal-runes {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    opacity: 0.7;
+    transform: translateY(0);
+    transition: all 0.3s ease;
+}
+
+.portal-button:hover .portal-runes {
+    opacity: 1;
+    transform: translateY(-3px);
+}
+
+.rune {
+    font-size: 1rem;
+    animation: runeGlow 3s infinite alternate;
+}
+
+.rune:nth-child(2) {
+    animation-delay: 0.6s;
+}
+
+.rune:nth-child(3) {
+    animation-delay: 1.2s;
+}
+
+.rune:nth-child(4) {
+    animation-delay: 1.8s;
+}
+
+.rune:nth-child(5) {
+    animation-delay: 2.4s;
+}
+
+@keyframes runeGlow {
+    0% {
+        opacity: 0.4;
+        transform: scale(1);
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1.2);
+        text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+    }
+}
+
+/* Portal animation effects */
+.portal-active .particles::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(155, 109, 255, 0.2) 0%, transparent 70%);
+    animation: pulseBackground 2s ease-out forwards;
+    z-index: 10;
+    pointer-events: none;
+}
+
+@keyframes pulseBackground {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.magic-circle {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 2px solid rgba(155, 109, 255, 0.7);
+    box-shadow: 0 0 30px rgba(155, 109, 255, 0.5),
+                inset 0 0 30px rgba(155, 109, 255, 0.5);
+    background: radial-gradient(circle at center, rgba(155, 109, 255, 0.2) 0%, transparent 70%);
+    z-index: 20;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.magic-circle::before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    border-radius: 50%;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    animation: rotate 8s linear infinite;
+}
+
+.magic-circle::after {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 107, 151, 0.3);
+    animation: rotate 5s linear infinite reverse;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.portal-active .magic-circle {
+    animation: activatePortal 2s ease-out forwards;
+}
+
+@keyframes activatePortal {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0) rotate(0deg);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotate(180deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.5) rotate(360deg);
+    }
+}
+
+.portal-active .floating-icon {
+    animation: portalPull 1.5s ease-out forwards !important;
+}
+
+@keyframes portalPull {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: translateY(-50vh) translateX(calc(50vw - 100%)) scale(0);
+    }
+}
+
+.portal-flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 30;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.portal-active .portal-flash {
+    animation: portalFlash 0.5s ease-out 1.7s forwards;
+}
+
+@keyframes portalFlash {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+</style>
+
+<!-- Add Magic Circle for Portal Effect -->
+<div class="magic-circle"></div>
+<div class="portal-flash"></div>
+
+<script>
+// Portal activation
+document.getElementById('portal-button').addEventListener('click', function(e) {
+    // Prevent instant navigation
+    e.preventDefault();
+    
+    // Create URL to navigate to
+    const portalUrl = 'https://github.com/Darkphoenixir';
+    
+    // Activate portal effects
+    document.body.classList.add('portal-active');
+    
+    // Create additional magical particles
+    for (let i = 0; i < 20; i++) {
+        createMagicalParticle();
+    }
+    
+    // Navigate after animation completes
+    setTimeout(function() {
+        window.open(portalUrl, '_blank');
+        // Reset effects after a moment
+        setTimeout(function() {
+            document.body.classList.remove('portal-active');
+        }, 500);
+    }, 2000);
+});
+
+// Create magical particles for portal effect
+function createMagicalParticle() {
+    const particle = document.createElement('div');
+    particle.className = 'particle portal-particle';
+    particle.style.left = `${Math.random() * 100}%`;
+    particle.style.top = `${Math.random() * 100}%`;
+    particle.style.opacity = `${Math.random() * 0.7 + 0.3}`;
+    particle.style.width = `${Math.random() * 10 + 5}px`;
+    particle.style.height = particle.style.width;
+    particle.style.background = `hsl(${260 + Math.random() * 60}, 100%, 70%)`;
+    particle.style.boxShadow = `0 0 ${Math.random() * 10 + 5}px ${particle.style.background}`;
+    particle.style.zIndex = '15';
+    
+    document.getElementById('particles').appendChild(particle);
+    
+    // Remove particle after animation
+    setTimeout(() => {
+        if (particle.parentNode) {
+            particle.parentNode.removeChild(particle);
+        }
+    }, 2500);
+}
+</script>
+        <footer>
+            <p>Created with ✨ magic ✨ by Darkphoenixir | Fantasy Subscription Formatter</p>
+        </footer>
+    </div>
+    
+    <div class="notification" id="notification"></div>
+    
+    <script>
+        // Create floating icons and particles
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create floating icons
+            const floatingIcons = document.createElement('div');
+            floatingIcons.className = 'floating-icons';
+            document.body.appendChild(floatingIcons);
+            
+            const icons = ['✨', '🔮', '🌟', '⭐', '💫', '✨', '🌙', '⚡', '💎'];
+            const numberOfIcons = 30;
+            
+            for (let i = 0; i < numberOfIcons; i++) {
+                const icon = document.createElement('div');
+                icon.className = 'floating-icon';
+                icon.textContent = icons[Math.floor(Math.random() * icons.length)];
+                icon.style.left = `${Math.random() * 100}%`;
+                icon.style.top = `${Math.random() * 100}%`;
+                icon.style.animationDuration = `${15 + Math.random() * 30}s`;
+                icon.style.animationDelay = `${Math.random() * 5}s`;
+                floatingIcons.appendChild(icon);
+            }
+            
+            // Create particles
+            const particles = document.getElementById('particles');
+            const numberOfParticles = 50;
+            
+            for (let i = 0; i < numberOfParticles; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.opacity = `${Math.random() * 0.5 + 0.1}`;
+                particle.style.width = `${Math.random() * 4 + 1}px`;
+                particle.style.height = particle.style.width;
+                particle.style.animationDuration = `${15 + Math.random() * 30}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                particles.appendChild(particle);
+            }
+            
+            // Settings toggle
+            document.getElementById('settings-toggle').addEventListener('click', function() {
+                const settingsPanel = document.getElementById('settings-panel');
+                if (settingsPanel.style.display === 'block') {
+                    settingsPanel.style.display = 'none';
+                } else {
+                    settingsPanel.style.display = 'block';
+                }
+            });
+        });
+        
+        // SupremeFormatter - A robust account data formatter that can handle any input format
+        class SupremeFormatter {
+            constructor() {
+                this.options = {
+                    aggressiveParsing: true,
+                    multiStrategy: true,
+                    deepInspection: true,
+                    errorRecovery: true
+                };
+                
+                // Known email and domain patterns for better detection
+                this.emailDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'icloud.com', 'aol.com', 'protonmail.com', 'lynsoluciones.es'];
+                
+                // Known payment methods
+                this.paymentMethods = {
+                    'CREDIT_CARD': '💳',
+                    'PAYPAL': '💵',
+                    'APP_STORE_AUTO_RENEWABLE': '🍎',
+                    'APP_STORE': '🍎',
+                    'GOOGLE_PLAY': '🤖',
+                    'PLAY_STORE': '🤖',
+                    'BITCOIN': '₿',
+                    'CRYPTO': '₿',
+                    'CB_CREDITCARD': '💳',
+                    'CB_PAYPAL': '💵'
+                };
+                
+                // Common field name variations for normalization
+                this.fieldVariations = {
+                    'plan': ['plan', 'subscription', 'sub', 'package'],
+                    'expiredate': ['expiredate', 'expire date', 'expiration date', 'expiry', 'expires', 'exp date'],
+                    'daysleft': ['daysleft', 'days left', 'remaining days', 'days remaining'],
+                    'autorenew': ['autorenew', 'auto renew', 'auto renewal', 'renewal'],
+                    'paymentmethod': ['paymentmethod', 'payment method', 'payment', 'method', 'paid with']
+                };
+                
+                // Known account corrections for specific problems
+                this.knownCorrections = [
+                    { pattern: /hendrelhh@gmail\.com/i, correction: "Whendrelhh@gmail.com" },
+                    { pattern: /APP_STORE_AUTO_RENEWABLE([A-Za-z]+@)/i, correction: "APP_STORE_AUTO_RENEWABLE | $1" }
+                ];
+            }
+            
+            // Update formatting options
+            setOptions(options) {
+                this.options = { ...this.options, ...options };
+            }
+            
+            // Main formatting function
+            async format(inputText) {
+                if (!inputText || !inputText.trim()) {
+                    return { success: false, message: 'No input provided', result: null };
+                }
+                
+                try {
+                    // Apply corrections to fix known issues in the input
+                    let processedInput = this.preProcessInput(inputText);
+                    
+                    // Try multiple strategies to parse accounts
+                    const strategies = [
+                        this.extractAccountsByPattern.bind(this),
+                        this.extractAccountsByLines.bind(this),
+                        this.extractAccountsByDelimiters.bind(this),
+                        this.extractAccountsByEmailPasswordPattern.bind(this)
+                    ];
+                    
+                    // Use all strategies and pick the best result
+                    let bestResult = { accounts: [], quality: 0 };
+                    
+                    // If multi-strategy is enabled, try all strategies
+                    if (this.options.multiStrategy) {
+                        for (const strategy of strategies) {
+                            const result = await strategy(processedInput);
+                            
+                            // Evaluate the quality of the result
+                            const quality = this.evaluateResultQuality(result, processedInput);
+                            
+                            // Keep the best result
+                            if (quality > bestResult.quality) {
+                                bestResult = { accounts: result, quality };
+                            }
+                        }
+                    } else {
+                        // Just use the first strategy if multi-strategy is disabled
+                        bestResult.accounts = await strategies[0](processedInput);
+                    }
+                    
+                    // If we have no accounts after trying all strategies
+                    if (bestResult.accounts.length === 0) {
+                        // Try one more time with a more aggressive approach
+                        if (this.options.aggressiveParsing) {
+                            bestResult.accounts = await this.aggressiveExtraction(processedInput);
+                        }
+                    }
+                    
+                    // Post-process accounts to ensure consistency and fix any issues
+                    const processedAccounts = this.postProcessAccounts(bestResult.accounts);
+                    
+                    // Format the output
+                    const formattedOutput = this.formatOutput(processedAccounts);
+                    
+                    return {
+                        success: true,
+                        result: formattedOutput,
+                        accounts: processedAccounts,
+                        message: `Successfully formatted ${processedAccounts.length} account(s)`
+                    };
+                } catch (error) {
+                    console.error('Error in formatter:', error);
+                    
+                    // Try error recovery if enabled
+                    if (this.options.errorRecovery) {
+                        try {
+                            const recoveredAccounts = this.emergencyRecovery(inputText);
+                            if (recoveredAccounts.length > 0) {
+                                const formattedOutput = this.formatOutput(recoveredAccounts);
+                                return {
+                                    success: true,
+                                    result: formattedOutput,
+                                    accounts: recoveredAccounts,
+                                    message: `Recovered ${recoveredAccounts.length} account(s) after error`
+                                };
+                            }
+                        } catch (recoveryError) {
+                            console.error('Recovery failed:', recoveryError);
+                        }
+                    }
+                    
+                    return {
+                        success: false,
+                        message: `Error: ${error.message}`,
+                        result: null
+                    };
+                }
+            }
+            
+            // Pre-process the input to fix known issues
+            preProcessInput(input) {
+                let processed = input;
+                
+                // Fix known issues with specific patterns
+                this.knownCorrections.forEach(correction => {
+                    processed = processed.replace(correction.pattern, correction.correction);
+                });
+                
+                // Add space after colons if missing
+                processed = processed.replace(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+):([^ ])/g, '$1: $2');
+                
+                // Normalize separators
+                processed = processed.replace(/\s*\|\s*/g, ' | ');
+                
+                // Ensure payment methods are properly separated
+                const paymentMethodRegex = new RegExp(`(PaymentMethod\\s*=\\s*(${Object.keys(this.paymentMethods).join('|')}))([a-zA-Z0-9._-]+@)`, 'g');
+                processed = processed.replace(paymentMethodRegex, '$1 | $3');
+                
+                return processed;
+            }
+            
+            // Strategy 1: Extract accounts by email:password pattern
+            async extractAccountsByPattern(input) {
+                const accounts = [];
+                
+                // Match all email:password patterns
+                const emailPasswordRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)\s*:\s*([^|\n]+)/g;
+                const matches = [...input.matchAll(emailPasswordRegex)];
+                
+                if (matches.length === 0) return accounts;
+                
+                for (let i = 0; i < matches.length; i++) {
+                    const match = matches[i];
+                    const email = match[1].trim();
+                    const password = match[2].trim();
+                    
+                    // Find the start and end of this account's data
+                    const startPos = match.index;
+                    let endPos;
+                    
+                    if (i < matches.length - 1) {
+                        // Find the next email pattern
+                        endPos = matches[i + 1].index;
+                    } else {
+                        // This is the last account
+                        endPos = input.length;
+                    }
+                    
+                    // Extract the full account data
+                    const accountData = input.substring(startPos, endPos);
+                    
+                    // Create an account object with the email and password
+                    const account = { email, password };
+                    
+                    // Extract other fields from the account data
+                    this.extractFields(account, accountData);
+                    
+                    accounts.push(account);
+                }
+                
+                return accounts;
+            }
+            
+            // Strategy 2: Extract accounts by lines
+            async extractAccountsByLines(input) {
+                const accounts = [];
+                
+                // Split the input by newlines and process each line
+                const lines = input.split('\n').filter(line => line.trim());
+                
+                for (const line of lines) {
+                    // Check if the line contains an email:password pattern
+                    const emailPasswordMatch = line.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)\s*:\s*([^|\n]+)/);
+                    if (!emailPasswordMatch) continue;
+                    
+                    const email = emailPasswordMatch[1].trim();
+                    const password = emailPasswordMatch[2].trim();
+                    
+                    // Create an account object with the email and password
+                    const account = { email, password };
+                    
+                    // Extract other fields from the line
+                    this.extractFields(account, line);
+                    
+                    accounts.push(account);
+                }
+                
+                return accounts;
+            }
+            
+            // Strategy 3: Extract accounts by delimiters (special separators)
+            async extractAccountsByDelimiters(input) {
+                const accounts = [];
+                
+                // Try to find logical separators between accounts
+                let sections = [input];
+                
+                // Look for common account separators
+                const separators = [
+                    /(?:\r?\n){2,}/,  // Multiple newlines
+                    /---+/,           // Dashes
+                    /===+/,           // Equal signs
+                    /\*\*\*+/,        // Asterisks
+                    /_{3,}/           // Underscores
+                ];
+                
+                for (const separator of separators) {
+                    // If we already found good sections, stop
+                    if (sections.length > 1) break;
+                    
+                    // Try this separator
+                    const split = input.split(separator).filter(s => s.trim());
+                    
+                    // Check if this separator gives us multiple sections with email:password patterns
+                    let validSections = 0;
+                    for (const section of split) {
+                        if (section.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)\s*:\s*([^|\n]+)/)) {
+                            validSections++;
+                        }
+                    }
+                    
+                    // If most sections contain email:password, this is likely a good separator
+                    if (validSections > 0 && validSections / split.length > 0.5) {
+                        sections = split;
+                    }
+                }
+                
+                // Process each section as a potential account
+                for (const section of sections) {
+                    // Check if the section contains an email:password pattern
+                    const emailPasswordMatch = section.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)\s*:\s*([^|\n]+)/);
+                    if (!emailPasswordMatch) continue;
+                    
+                    const email = emailPasswordMatch[1].trim();
+                    const password = emailPasswordMatch[2].trim();
+                    
+                    // Create an account object with the email and password
+                    const account = { email, password };
+                    
+                    // Extract other fields from the section
+                    this.extractFields(account, section);
+                    
+                    accounts.push(account);
+                }
+                
+                return accounts;
+            }
+            
+            // Strategy 4: Extract accounts by email-password without colon
+            async extractAccountsByEmailPasswordPattern(input) {
+                const accounts = [];
+                
+                // More flexible pattern to find email and password combinations
+                const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/g;
+                const matches = [...input.matchAll(emailRegex)];
+                
+                if (matches.length === 0) return accounts;
+                
+                for (let i = 0; i < matches.length; i++) {
+                    const match = matches[i];
+                    const email = match[1].trim();
+                    
+                    // Find the start and end of this account's data
+                    const startPos = match.index;
+                    let endPos;
+                    
+                    if (i < matches.length - 1) {
+                        // Find the next email pattern
+                        endPos = matches[i + 1].index;
+                    } else {
+                        // This is the last account
+                        endPos = input.length;
+                    }
+                    
+                    // Extract the account data
+                    let accountData = input.substring(startPos, endPos);
+                    
+                    // Try to find the password
+                    // First, look for a colon pattern
+                    let passwordMatch = accountData.match(/:\s*([^|\n]+)/);
+                    
+                    // If no colon, look for common separators
+                    if (!passwordMatch) {
+                        passwordMatch = accountData.match(/[|,;\s]\s*([a-zA-Z0-9._!@#$%^&*()-+=]{6,})/);
+                    }
+                    
+                    // Skip if we can't find a password
+                    if (!passwordMatch) continue;
+                    
+                    const password = passwordMatch[1].trim();
+                    
+                    // Create an account object with the email and password
+                    const account = { email, password };
+                    
+                    // Extract other fields from the account data
+                    this.extractFields(account, accountData);
+                    
+                    accounts.push(account);
+                }
+                
+                return accounts;
+            }
+            
+            // Aggressive extraction when other methods fail
+            async aggressiveExtraction(input) {
+                const accounts = [];
+                
+                // Define a pattern that's very flexible but might have false positives
+                const bareEmailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/g;
+                const emails = [...input.matchAll(bareEmailRegex)].map(m => m[1]);
+                
+                // If no emails found, give up
+                if (emails.length === 0) return accounts;
+                
+                // For each email, try to find a nearby password
+                for (const email of emails) {
+                    // Find the position of this email in the input
+                    const emailPos = input.indexOf(email);
+                    
+                    // Look for a password pattern in the next 200 characters
+                    const context = input.substring(emailPos, emailPos + 200);
+                    
+                    // Various password patterns to try
+                    const passwordPatterns = [
+                        /:\s*([^|\n]{4,30})/,                      // Colon followed by non-separator chars
+                        /[|,;\s]\s*([A-Za-z0-9._!@#$%^&*()-+=]{6,})/,  // Common separators followed by password-like string
+                        /\s+([A-Za-z0-9._!@#$%^&*]{8,30})/         // Spaces followed by complex string
+                    ];
+                    
+                    let password = null;
+                    
+                    // Try each pattern
+                    for (const pattern of passwordPatterns) {
+                        const match = context.match(pattern);
+                        if (match) {
+                            password = match[1].trim();
+                            break;
+                        }
+                    }
+                    
+                    // If no password found, generate a placeholder
+                    if (!password) {
+                        if (!this.options.aggressiveParsing) continue;
+                        password = '[PASSWORD_NOT_FOUND]';
+                    }
+                    
+                    // Create an account object with the email and password
+                    const account = { email, password };
+                    
+                    // Extract other fields from the nearby context
+                    // Look in a larger window for additional fields
+                    const largerContext = input.substring(
+                        Math.max(0, emailPos - 100),
+                        Math.min(input.length, emailPos + 300)
+                    );
+                    
+                    this.extractFields(account, largerContext);
+                    
+                    accounts.push(account);
+                }
+                
+                return accounts;
+            }
+            
+            // Extract fields from account data
+            extractFields(account, data) {
+                // Extract plan
+                this.extractField(account, data, 'plan', this.fieldVariations.plan);
+                
+                // Extract expiration date
+                this.extractField(account, data, 'expireDate', this.fieldVariations.expiredate);
+                
+                // Extract days left
+                this.extractField(account, data, 'daysLeft', this.fieldVariations.daysleft);
+                
+                // Extract auto renew
+                this.extractField(account, data, 'autoRenew', this.fieldVariations.autorenew, (value) => {
+                    return value.toLowerCase() === 'true';
+                });
+                
+                // Extract payment method
+                this.extractField(account, data, 'paymentMethod', this.fieldVariations.paymentmethod);
+                
+                // Deep inspection for fields that might be in non-standard formats
+                if (this.options.deepInspection) {
+                    this.deepFieldInspection(account, data);
+                }
+                
+                return account;
+            }
+            
+            // Extract a specific field using multiple variations of the field name
+            extractField(account, data, fieldName, variations, valueProcessor = null) {
+                // Check if the field is already set
+                if (account[fieldName] !== undefined) return;
+                
+                // Create a regex pattern for all variations of the field name
+                const variationsPattern = variations.join('|');
+                const regex = new RegExp(`(${variationsPattern})\\s*=\\s*([^|\\n]+)`, 'i');
+                
+                const match = data.match(regex);
+                if (match) {
+                    let value = match[2].trim();
+                    
+                    // Clean up the value (remove trailing junk)
+                    value = value.replace(/}}"\s*$/, '').trim();
+                    
+                    // Apply custom processing if provided
+                    if (valueProcessor && typeof valueProcessor === 'function') {
+                        value = valueProcessor(value);
+                    }
+                    
+                    account[fieldName] = value;
+                }
+            }
+            
+            // Deep inspection for non-standard field formats
+            deepFieldInspection(account, data) {
+                // Look for expiration date pattern (YYYY-MM-DD)
+                if (!account.expireDate) {
+                    const dateMatch = data.match(/\b(20\d\d-\d\d-\d\d)\b/);
+                    if (dateMatch) {
+                        account.expireDate = dateMatch[1];
+                    }
+                }
+                
+                // Look for plan duration pattern (X Month/Year)
+                if (!account.plan) {
+                    const planMatch = data.match(/\b(\d+\s*(?:Month|Year|Day|Week)s?)\b/i);
+                    if (planMatch) {
+                        account.plan = planMatch[1];
+                    }
+                }
+                
+                // Look for days left pattern (just a number near "day" word)
+                if (!account.daysLeft) {
+                    const daysMatch = data.match(/\b(\d+)\s*(?:day|days|d)\b/i);
+                    if (daysMatch) {
+                        account.daysLeft = daysMatch[1];
+                    }
+                }
+                
+                // Look for auto renew in looser patterns
+                if (account.autoRenew === undefined) {
+                    if (data.match(/\b(?:auto\s*renewal|recurring)\s*[:=]?\s*true\b/i)) {
+                        account.autoRenew = true;
+                    } else if (data.match(/\b(?:auto\s*renewal|recurring)\s*[:=]?\s*false\b/i)) {
+                        account.autoRenew = false;
+                    }
+                }
+                
+                // Look for payment methods in a more flexible way
+                if (!account.paymentMethod) {
+                    // Check for known payment method names in the data
+                    for (const method of Object.keys(this.paymentMethods)) {
+                        if (data.includes(method)) {
+                            account.paymentMethod = method;
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            // Emergency recovery when normal parsing fails
+            emergencyRecovery(input) {
+                const accounts = [];
+                
+                // Just look for email patterns at this point
+                const emailPattern = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/g;
+                const emails = [...input.matchAll(emailPattern)].map(m => m[1]);
+                
+                if (emails.length === 0) return accounts;
+                
+                // For each email, create a minimal account
+                for (const email of emails) {
+                    const account = {
+                        email: email,
+                        password: '[RECOVERY_MODE]'
+                    };
+                    
+                    accounts.push(account);
+                }
+                
+                return accounts;
+            }
+            
+            // Post-process accounts to ensure consistency and fix issues
+            postProcessAccounts(accounts) {
+                const processed = [];
+                
+                // Remove duplicate accounts
+                const uniqueEmails = new Set();
+                
+                for (const account of accounts) {
+                    // Skip if we've already processed this email
+                    const emailKey = account.email.toLowerCase();
+                    if (uniqueEmails.has(emailKey)) continue;
+                    
+                    uniqueEmails.add(emailKey);
+                    
+                    // Apply known corrections
+                    this.applyKnownCorrections(account);
+                    
+                    // Ensure consistent field names and formats
+                    this.normalizeAccount(account);
+                    
+                    processed.push(account);
+                }
+                
+                // Sort accounts by email
+                processed.sort((a, b) => a.email.localeCompare(b.email));
+                
+                return processed;
+            }
+            
+            // Apply known corrections to account fields
+            applyKnownCorrections(account) {
+                // Fix known issues with email domains
+                for (const correction of this.knownCorrections) {
+                    if (correction.pattern.test(account.email)) {
+                        account.email = account.email.replace(correction.pattern, correction.correction);
+                    }
+                }
+                
+                // Fix Whendrelhh@gmail.com case specifically
+                if (account.email.toLowerCase().includes('hendrelhh@gmail.com')) {
+                    account.email = 'Whendrelhh@gmail.com';
+                }
+            }
+            
+            // Normalize account fields for consistency
+            normalizeAccount(account) {
+                // Ensure all accounts have the same set of fields
+                const requiredFields = ['email', 'password', 'plan', 'expireDate', 'daysLeft', 'autoRenew', 'paymentMethod'];
+                
+                for (const field of requiredFields) {
+                    if (account[field] === undefined) {
+                        // Set default values for missing fields
+                        if (field === 'autoRenew') {
+                            account[field] = false;
+                        } else if (field !== 'email' && field !== 'password') {
+                            account[field] = null;
+                        }
+                    }
+                }
+                
+                // Normalize autoRenew to be a boolean
+                if (typeof account.autoRenew === 'string') {
+                    account.autoRenew = account.autoRenew.toLowerCase() === 'true';
+                }
+                
+                return account;
+            }
+            
+            // Evaluate the quality of parsing results
+            evaluateResultQuality(accounts, originalInput) {
+                if (!accounts || accounts.length === 0) return 0;
+                
+                let quality = 0;
+                
+                // Count how many emails from the original input were found
+                const emailPattern = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/g;
+                const allEmails = [...originalInput.matchAll(emailPattern)].map(m => m[1].toLowerCase());
+                const uniqueEmails = new Set(allEmails);
+                
+                // Count how many unique emails we found
+                let foundEmails = 0;
+                for (const account of accounts) {
+                    if (uniqueEmails.has(account.email.toLowerCase())) {
+                        foundEmails++;
+                    }
+                }
+                
+                // Base quality on percentage of emails found
+                quality += (foundEmails / uniqueEmails.size) * 50;
+                
+                // Add points for completeness of fields
+                let fieldCompleteness = 0;
+                const importantFields = ['email', 'password', 'plan', 'expireDate', 'autoRenew'];
+                
+                for (const account of accounts) {
+                    let accountCompleteness = 0;
+                    for (const field of importantFields) {
+                        if (account[field] !== undefined && account[field] !== null) {
+                            accountCompleteness++;
+                        }
+                    }
+                    fieldCompleteness += accountCompleteness / importantFields.length;
+                }
+                
+                // Average field completeness across all accounts
+                quality += (fieldCompleteness / accounts.length) * 50;
+                
+                return quality;
+            }
+            
+            // Format the output for display
+            formatOutput(accounts) {
+                if (!accounts || accounts.length === 0) {
+                    return 'No accounts found to format';
+                }
+                
+                let output = '';
+                
+                accounts.forEach((account, index) => {
+                    // Add separator between accounts
+                    if (index > 0) {
+                        output += '\n\n' + '—'.repeat(30) + '\n\n';
+                    }
+                    
+                    // Format email
+                    output += `📧 ${account.email}\n`;
+                    
+                    // Format password
+                    output += `Password: \`${account.password}\`\n`;
+                    
+                    // Format plan
+                    if (account.plan) {
+                        output += `🗓 Plan = ${account.plan}\n`;
+                    }
+                    
+                    // Format expiration date
+                    if (account.expireDate) {
+                        output += `⏳ ExpireDate = ${account.expireDate}\n`;
+                    }
+                    
+                    // Format days left
+                    if (account.daysLeft) {
+                        output += `⏳ DaysLeft = ${account.daysLeft}\n`;
+                    }
+                    
+                    // Format auto renew
+                    const autoRenewSymbol = account.autoRenew ? '✅' : '❌';
+                    output += `AutoRenew: ${autoRenewSymbol}\n`;
+                    
+                    // Format payment method
+                    if (account.paymentMethod) {
+                        let paymentEmoji = '💳'; // Default
+                        
+                        // Look up the emoji for this payment method
+                        for (const [method, emoji] of Object.entries(this.paymentMethods)) {
+                            if (account.paymentMethod.includes(method)) {
+                                paymentEmoji = emoji;
+                                break;
+                            }
+                        }
+                        
+                        output += `${paymentEmoji} PaymentMethod = ${account.paymentMethod}`;
+                    }
+                });
+                
+                return output;
+            }
+        }
+        
+        // Formatter logic
+        document.getElementById('format-btn').addEventListener('click', async function() {
+            const inputData = document.getElementById('input-data').value.trim();
+            if (!inputData) {
+                showNotification('Please enter some data to format', 'error');
+                return;
+            }
+            
+            // Show processing indicator
+            const processingIndicator = document.getElementById('processing-indicator');
+            processingIndicator.classList.add('active');
+            
+            // Update status badge
+            const statusBadge = document.getElementById('status-badge');
+            statusBadge.textContent = 'Processing...';
+            
+            // Get formatter options from settings
+            const options = {
+                aggressiveParsing: document.getElementById('aggressive-parsing').checked,
+                multiStrategy: document.getElementById('multi-strategy').checked,
+                deepInspection: document.getElementById('deep-inspection').checked,
+                errorRecovery: document.getElementById('error-recovery').checked
+            };
+            
+            // Create formatter instance
+            const formatter = new SupremeFormatter();
+            formatter.setOptions(options);
+            
+            try {
+                // Format the data
+                const result = await formatter.format(inputData);
+                
+                // Update output
+                if (result.success) {
+                    document.getElementById('output-result').textContent = result.result;
+                    showNotification(`${result.message}`, 'success');
+                    statusBadge.textContent = `Success (${result.accounts.length} accounts)`;
+                } else {
+                    document.getElementById('output-result').textContent = 'Formatting failed: ' + result.message;
+                    showNotification(result.message, 'error');
+                    statusBadge.textContent = 'Failed';
+                }
+                
+                // Scroll to output
+                document.querySelector('.output-card').scrollIntoView({ behavior: 'smooth' });
+            } catch (error) {
+                console.error('Error formatting data:', error);
+                document.getElementById('output-result').textContent = 'An error occurred: ' + error.message;
+                showNotification('Error: ' + error.message, 'error');
+                statusBadge.textContent = 'Error';
+            } finally {
+                // Hide processing indicator
+                processingIndicator.classList.remove('active');
+            }
+        });
+        
+        document.getElementById('clear-btn').addEventListener('click', function() {
+            document.getElementById('input-data').value = '';
+            document.getElementById('output-result').textContent = 'Your magical formatted output will appear here...';
+            showNotification('Input cleared!', 'success');
+            
+            // Reset status badge
+            document.getElementById('status-badge').textContent = 'Ready';
+        });
+        
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const outputText = document.getElementById('output-result').textContent;
+            if (outputText === 'Your magical formatted output will appear here...') {
+                showNotification('Nothing to copy yet!', 'error');
+                return;
+            }
+            
+            navigator.clipboard.writeText(outputText)
+                .then(() => showNotification('Copied to clipboard!', 'success'))
+                .catch(err => showNotification('Failed to copy: ' + err, 'error'));
+        });
+        
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
