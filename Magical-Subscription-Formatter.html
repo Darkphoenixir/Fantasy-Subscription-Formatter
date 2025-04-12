@@ -412,6 +412,42 @@
             animation: spin 1s linear infinite;
         }
         
+        /* Pattern settings section */
+        .pattern-settings {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed rgba(155, 109, 255, 0.2);
+        }
+        
+        .pattern-field {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .pattern-field input[type="text"] {
+            flex: 1;
+            background: rgba(26, 19, 37, 0.6);
+            border: 1px solid rgba(155, 109, 255, 0.3);
+            border-radius: 5px;
+            padding: 0.5rem;
+            color: var(--light);
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .pattern-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .pattern-button {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .container {
@@ -429,6 +465,149 @@
             .button-container {
                 flex-direction: column;
             }
+        }
+        
+        /* Mystical Portal Styles */
+        .mystical-portal-section {
+            margin-top: 3rem;
+            padding: 3rem 0;
+            background: linear-gradient(rgba(26, 19, 37, 0.5), rgba(26, 19, 37, 0.8)),
+                        url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48ZyBmaWxsPSJyZ2JhKDEyNSwgOTUsIDE5MCwgMC4yKSI+PGNpcmNsZSBjeD0iNSIgY3k9IjUiIHI9IjEiLz48Y2lyY2xlIGN4PSIxNSIgY3k9IjUiIHI9IjEiLz48Y2lyY2xlIGN4PSIyNSIgY3k9IjUiIHI9IjEiLz48Y2lyY2xlIGN4PSIzNSIgY3k9IjUiIHI9IjEiLz48Y2lyY2xlIGN4PSI1IiBjeT0iMTUiIHI9IjEiLz48Y2lyY2xlIGN4PSIxNSIgY3k9IjE1IiByPSIxIi8+PGNpcmNsZSBjeD0iMjUiIGN5PSIxNSIgcj0iMSIvPjxjaXJjbGUgY3g9IjM1IiBjeT0iMTUiIHI9IjEiLz48Y2lyY2xlIGN4PSI1IiBjeT0iMjUiIHI9IjEiLz48Y2lyY2xlIGN4PSIxNSIgY3k9IjI1IiByPSIxIi8+PGNpcmNsZSBjeD0iMjUiIGN5PSIyNSIgcj0iMSIvPjxjaXJjbGUgY3g9IjM1IiBjeT0iMjUiIHI9IjEiLz48Y2lyY2xlIGN4PSI1IiBjeT0iMzUiIHI9IjEiLz48Y2lyY2xlIGN4PSIxNSIgY3k9IjM1IiByPSIxIi8+PGNpcmNsZSBjeD0iMjUiIGN5PSIzNSIgcj0iMSIvPjxjaXJjbGUgY3g9IjM1IiBjeT0iMzUiIHI9IjEiLz48L2c+PC9zdmc+');
+            border-top: 1px solid rgba(155, 109, 255, 0.3);
+            border-bottom: 1px solid rgba(155, 109, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mystical-portal-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(155, 109, 255, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .portal-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .portal-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(155, 109, 255, 0.3);
+        }
+
+        .portal-description {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            color: var(--text);
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .portal-button {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.2rem 2.5rem;
+            background: linear-gradient(135deg, rgba(90, 58, 126, 0.9), rgba(155, 109, 255, 0.9));
+            color: white;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.21, 0.61, 0.35, 1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3),
+                        inset 0 0 20px rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+        }
+
+        .portal-button::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.8) 0%, transparent 10%);
+            transform: scale(0);
+            opacity: 0;
+            transition: transform 0.7s ease-out, opacity 0.7s ease-out;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .portal-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4),
+                        inset 0 0 20px rgba(255, 255, 255, 0.3);
+            letter-spacing: 1px;
+        }
+
+        .portal-button:hover::before {
+            opacity: 0.3;
+            transform: scale(1);
+        }
+
+        .portal-button:active {
+            transform: translateY(0);
+        }
+
+        .portal-button-text {
+            position: relative;
+            z-index: 2;
+        }
+
+        .portal-runes {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            opacity: 0.7;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+
+        .portal-button:hover .portal-runes {
+            opacity: 1;
+            transform: translateY(-3px);
+        }
+
+        .rune {
+            font-size: 1rem;
+            animation: runeGlow 3s infinite alternate;
+        }
+
+        .rune:nth-child(2) {
+            animation-delay: 0.6s;
+        }
+
+        .rune:nth-child(3) {
+            animation-delay: 1.2s;
+        }
+
+        .rune:nth-child(4) {
+            animation-delay: 1.8s;
+        }
+
+        .rune:nth-child(5) {
+            animation-delay: 2.4s;
         }
         
         /* Animations */
@@ -503,6 +682,155 @@
                 transform: rotate(360deg);
             }
         }
+        
+        @keyframes runeGlow {
+            0% {
+                opacity: 0.4;
+                transform: scale(1);
+                text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.2);
+                text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+            }
+        }
+
+        /* Portal animation effects */
+        .portal-active .particles::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(155, 109, 255, 0.2) 0%, transparent 70%);
+            animation: pulseBackground 2s ease-out forwards;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        @keyframes pulseBackground {
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .magic-circle {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 2px solid rgba(155, 109, 255, 0.7);
+            box-shadow: 0 0 30px rgba(155, 109, 255, 0.5),
+                        inset 0 0 30px rgba(155, 109, 255, 0.5);
+            background: radial-gradient(circle at center, rgba(155, 109, 255, 0.2) 0%, transparent 70%);
+            z-index: 20;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .magic-circle::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            animation: rotate 8s linear infinite;
+        }
+
+        .magic-circle::after {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 107, 151, 0.3);
+            animation: rotate 5s linear infinite reverse;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .portal-active .magic-circle {
+            animation: activatePortal 2s ease-out forwards;
+        }
+
+        @keyframes activatePortal {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0) rotate(0deg);
+            }
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1) rotate(180deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(1.5) rotate(360deg);
+            }
+        }
+
+        .portal-active .floating-icon {
+            animation: portalPull 1.5s ease-out forwards !important;
+        }
+
+        @keyframes portalPull {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: translateY(-50vh) translateX(calc(50vw - 100%)) scale(0);
+            }
+        }
+
+        .portal-flash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 30;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .portal-active .portal-flash {
+            animation: portalFlash 0.5s ease-out 1.7s forwards;
+        }
+
+        @keyframes portalFlash {
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -539,6 +867,27 @@
                             <div class="setting-item">
                                 <input type="checkbox" id="error-recovery" checked>
                                 <label for="error-recovery">Error Recovery</label>
+                            </div>
+                            <div class="setting-item">
+                                <input type="checkbox" id="remove-tags" checked>
+                                <label for="remove-tags">Remove Tag IDs</label>
+                            </div>
+                        </div>
+                        
+                        <div class="pattern-settings">
+                            <h4>Tag Removal Patterns</h4>
+                            <p>Add patterns to remove from passwords (e.g., TG tags)</p>
+                            
+                            <div id="pattern-container">
+                                <div class="pattern-field">
+                                    <input type="text" class="pattern-input" value="- by@\w+" placeholder="Regular expression pattern">
+                                </div>
+                            </div>
+                            
+                            <div class="pattern-actions">
+                                <button class="pattern-button" id="add-pattern">
+                                    <i class="fas fa-plus"></i> Add Pattern
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -597,381 +946,37 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- Mystical Portal Section -->
+            <div class="mystical-portal-section">
+                <div class="portal-container">
+                    <h3 class="portal-title">✧ Discover the Arcane Codex ✧</h3>
+                    <p class="portal-description">Venture deeper into the magical realm where more enchanted creations await. The Fallen Angel's repository holds mysteries beyond imagination...</p>
+                    
+                    <a href="https://github.com/Darkphoenixir" target="_blank" class="portal-button" id="portal-button">
+                        <span class="portal-button-text">Open the Mystical Gateway</span>
+                        <div class="portal-runes">
+                            <span class="rune">⚡</span>
+                            <span class="rune">✦</span>
+                            <span class="rune">✧</span>
+                            <span class="rune">⚝</span>
+                            <span class="rune">⚜</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
         
-<!-- Mystical Portal Section -->
-<div class="mystical-portal-section">
-    <div class="portal-container">
-        <h3 class="portal-title">✧ Discover the Arcane Codex ✧</h3>
-        <p class="portal-description">Venture deeper into the magical realm where more enchanted creations await. The Fallen Angel's repository holds mysteries beyond imagination...</p>
-        
-        <a href="https://github.com/Darkphoenixir" target="_blank" class="portal-button" id="portal-button">
-            <span class="portal-button-text">Open the Mystical Gateway</span>
-            <div class="portal-runes">
-                <span class="rune">⚡</span>
-                <span class="rune">✦</span>
-                <span class="rune">✧</span>
-                <span class="rune">⚝</span>
-                <span class="rune">⚜</span>
-            </div>
-        </a>
-    </div>
-</div>
-
-<style>
-/* Mystical Portal Styles */
-.mystical-portal-section {
-    margin-top: 3rem;
-    padding: 3rem 0;
-    background: linear-gradient(rgba(26, 19, 37, 0.5), rgba(26, 19, 37, 0.8)),
-                url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48ZyBmaWxsPSJyZ2JhKDEyNSwgOTUsIDE5MCwgMC4yKSI+PGNpcmNsZSBjeD0iNSIgY3k9IjUiIHI9IjEiLz48Y2lyY2xlIGN4PSIxNSIgY3k9IjUiIHI9IjEiLz48Y2lyY2xlIGN4PSIyNSIgY3k9IjUiIHI9IjEiLz48Y2lyY2xlIGN4PSIzNSIgY3k9IjUiIHI9IjEiLz48Y2lyY2xlIGN4PSI1IiBjeT0iMTUiIHI9IjEiLz48Y2lyY2xlIGN4PSIxNSIgY3k9IjE1IiByPSIxIi8+PGNpcmNsZSBjeD0iMjUiIGN5PSIxNSIgcj0iMSIvPjxjaXJjbGUgY3g9IjM1IiBjeT0iMTUiIHI9IjEiLz48Y2lyY2xlIGN4PSI1IiBjeT0iMjUiIHI9IjEiLz48Y2lyY2xlIGN4PSIxNSIgY3k9IjI1IiByPSIxIi8+PGNpcmNsZSBjeD0iMjUiIGN5PSIyNSIgcj0iMSIvPjxjaXJjbGUgY3g9IjM1IiBjeT0iMjUiIHI9IjEiLz48Y2lyY2xlIGN4PSI1IiBjeT0iMzUiIHI9IjEiLz48Y2lyY2xlIGN4PSIxNSIgY3k9IjM1IiByPSIxIi8+PGNpcmNsZSBjeD0iMjUiIGN5PSIzNSIgcj0iMSIvPjxjaXJjbGUgY3g9IjM1IiBjeT0iMzUiIHI9IjEiLz48L2c+PC9zdmc+');
-    border-top: 1px solid rgba(155, 109, 255, 0.3);
-    border-bottom: 1px solid rgba(155, 109, 255, 0.3);
-    position: relative;
-    overflow: hidden;
-}
-
-.mystical-portal-section::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at center, rgba(155, 109, 255, 0.15) 0%, transparent 70%);
-    pointer-events: none;
-}
-
-.portal-container {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-    position: relative;
-    z-index: 2;
-}
-
-.portal-title {
-    font-family: 'Cinzel', serif;
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    background: linear-gradient(90deg, var(--accent), var(--secondary));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-shadow: 0 0 15px rgba(155, 109, 255, 0.3);
-}
-
-.portal-description {
-    font-size: 1.1rem;
-    max-width: 600px;
-    margin: 0 auto 2.5rem;
-    color: var(--text);
-    opacity: 0.9;
-    line-height: 1.6;
-}
-
-.portal-button {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1.2rem 2.5rem;
-    background: linear-gradient(135deg, rgba(90, 58, 126, 0.9), rgba(155, 109, 255, 0.9));
-    color: white;
-    font-family: 'Cinzel', serif;
-    font-weight: 700;
-    font-size: 1.2rem;
-    border-radius: 50px;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    text-decoration: none;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.5s cubic-bezier(0.21, 0.61, 0.35, 1);
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3),
-                inset 0 0 20px rgba(255, 255, 255, 0.2);
-    cursor: pointer;
-}
-
-.portal-button::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.8) 0%, transparent 10%);
-    transform: scale(0);
-    opacity: 0;
-    transition: transform 0.7s ease-out, opacity 0.7s ease-out;
-    z-index: 1;
-    pointer-events: none;
-}
-
-.portal-button:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4),
-                inset 0 0 20px rgba(255, 255, 255, 0.3);
-    letter-spacing: 1px;
-}
-
-.portal-button:hover::before {
-    opacity: 0.3;
-    transform: scale(1);
-}
-
-.portal-button:active {
-    transform: translateY(0);
-}
-
-.portal-button-text {
-    position: relative;
-    z-index: 2;
-}
-
-.portal-runes {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
-    opacity: 0.7;
-    transform: translateY(0);
-    transition: all 0.3s ease;
-}
-
-.portal-button:hover .portal-runes {
-    opacity: 1;
-    transform: translateY(-3px);
-}
-
-.rune {
-    font-size: 1rem;
-    animation: runeGlow 3s infinite alternate;
-}
-
-.rune:nth-child(2) {
-    animation-delay: 0.6s;
-}
-
-.rune:nth-child(3) {
-    animation-delay: 1.2s;
-}
-
-.rune:nth-child(4) {
-    animation-delay: 1.8s;
-}
-
-.rune:nth-child(5) {
-    animation-delay: 2.4s;
-}
-
-@keyframes runeGlow {
-    0% {
-        opacity: 0.4;
-        transform: scale(1);
-        text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1.2);
-        text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
-    }
-}
-
-/* Portal animation effects */
-.portal-active .particles::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at center, rgba(155, 109, 255, 0.2) 0%, transparent 70%);
-    animation: pulseBackground 2s ease-out forwards;
-    z-index: 10;
-    pointer-events: none;
-}
-
-@keyframes pulseBackground {
-    0% {
-        opacity: 0;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
-}
-
-.magic-circle {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    border: 2px solid rgba(155, 109, 255, 0.7);
-    box-shadow: 0 0 30px rgba(155, 109, 255, 0.5),
-                inset 0 0 30px rgba(155, 109, 255, 0.5);
-    background: radial-gradient(circle at center, rgba(155, 109, 255, 0.2) 0%, transparent 70%);
-    z-index: 20;
-    opacity: 0;
-    pointer-events: none;
-}
-
-.magic-circle::before {
-    content: "";
-    position: absolute;
-    top: -20px;
-    left: -20px;
-    right: -20px;
-    bottom: -20px;
-    border-radius: 50%;
-    border: 4px solid rgba(255, 255, 255, 0.1);
-    animation: rotate 8s linear infinite;
-}
-
-.magic-circle::after {
-    content: "";
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
-    border-radius: 50%;
-    border: 2px solid rgba(255, 107, 151, 0.3);
-    animation: rotate 5s linear infinite reverse;
-}
-
-@keyframes rotate {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-.portal-active .magic-circle {
-    animation: activatePortal 2s ease-out forwards;
-}
-
-@keyframes activatePortal {
-    0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0) rotate(0deg);
-    }
-    50% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1) rotate(180deg);
-    }
-    100% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(1.5) rotate(360deg);
-    }
-}
-
-.portal-active .floating-icon {
-    animation: portalPull 1.5s ease-out forwards !important;
-}
-
-@keyframes portalPull {
-    0% {
-        transform: scale(1);
-    }
-    100% {
-        transform: translateY(-50vh) translateX(calc(50vw - 100%)) scale(0);
-    }
-}
-
-.portal-flash {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: white;
-    z-index: 30;
-    opacity: 0;
-    pointer-events: none;
-}
-
-.portal-active .portal-flash {
-    animation: portalFlash 0.5s ease-out 1.7s forwards;
-}
-
-@keyframes portalFlash {
-    0% {
-        opacity: 0;
-    }
-    50% {
-        opacity: 0.8;
-    }
-    100% {
-        opacity: 0;
-    }
-}
-</style>
-
-<!-- Add Magic Circle for Portal Effect -->
-<div class="magic-circle"></div>
-<div class="portal-flash"></div>
-
-<script>
-// Portal activation
-document.getElementById('portal-button').addEventListener('click', function(e) {
-    // Prevent instant navigation
-    e.preventDefault();
-    
-    // Create URL to navigate to
-    const portalUrl = 'https://github.com/Darkphoenixir';
-    
-    // Activate portal effects
-    document.body.classList.add('portal-active');
-    
-    // Create additional magical particles
-    for (let i = 0; i < 20; i++) {
-        createMagicalParticle();
-    }
-    
-    // Navigate after animation completes
-    setTimeout(function() {
-        window.open(portalUrl, '_blank');
-        // Reset effects after a moment
-        setTimeout(function() {
-            document.body.classList.remove('portal-active');
-        }, 500);
-    }, 2000);
-});
-
-// Create magical particles for portal effect
-function createMagicalParticle() {
-    const particle = document.createElement('div');
-    particle.className = 'particle portal-particle';
-    particle.style.left = `${Math.random() * 100}%`;
-    particle.style.top = `${Math.random() * 100}%`;
-    particle.style.opacity = `${Math.random() * 0.7 + 0.3}`;
-    particle.style.width = `${Math.random() * 10 + 5}px`;
-    particle.style.height = particle.style.width;
-    particle.style.background = `hsl(${260 + Math.random() * 60}, 100%, 70%)`;
-    particle.style.boxShadow = `0 0 ${Math.random() * 10 + 5}px ${particle.style.background}`;
-    particle.style.zIndex = '15';
-    
-    document.getElementById('particles').appendChild(particle);
-    
-    // Remove particle after animation
-    setTimeout(() => {
-        if (particle.parentNode) {
-            particle.parentNode.removeChild(particle);
-        }
-    }, 2500);
-}
-</script>
         <footer>
-            <p>Created with ✨ magic ✨ by Darkphoenixir | Fantasy Subscription Formatter</p>
+            <p>Created by ✨ pilixy ✨ | Fantasy Subscription Formatter</p>
         </footer>
     </div>
     
     <div class="notification" id="notification"></div>
+    
+    <!-- Add Magic Circle for Portal Effect -->
+    <div class="magic-circle"></div>
+    <div class="portal-flash"></div>
     
     <script>
         // Create floating icons and particles
@@ -1021,17 +1026,41 @@ function createMagicalParticle() {
                     settingsPanel.style.display = 'block';
                 }
             });
+            
+            // Add pattern button
+            document.getElementById('add-pattern').addEventListener('click', function() {
+                const patternContainer = document.getElementById('pattern-container');
+                const patternField = document.createElement('div');
+                patternField.className = 'pattern-field';
+                patternField.innerHTML = `
+                    <input type="text" class="pattern-input" placeholder="Regular expression pattern">
+                    <button class="remove-pattern" onclick="this.parentNode.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                patternContainer.appendChild(patternField);
+            });
         });
         
-        // SupremeFormatter - A robust account data formatter that can handle any input format
-        class SupremeFormatter {
+        // UltraFormatter - Advanced version with TG ID pattern removal and more robust parsing
+        class UltraFormatter {
             constructor() {
                 this.options = {
                     aggressiveParsing: true,
                     multiStrategy: true,
                     deepInspection: true,
-                    errorRecovery: true
+                    errorRecovery: true,
+                    removeTags: true
                 };
+                
+                // Default patterns to remove from passwords (like TG IDs)
+                this.removalPatterns = [
+                    /\s*-\s*by@[A-Za-z0-9_]+/g,  // - by@USERNAME pattern
+                    /\s*-\s*BY@[A-Za-z0-9_]+/g,   // - BY@USERNAME pattern (uppercase)
+                    /\s*-\s*By@[A-Za-z0-9_]+/g,   // - By@USERNAME pattern (mixed case) 
+                    /\s*-\s*by@L_E_O_U_S_E_S/g,   // Specific pattern from example
+                    /\s*-\s*by[A-Za-z0-9@_]+/g    // More general pattern for by tags
+                ];
                 
                 // Known email and domain patterns for better detection
                 this.emailDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'icloud.com', 'aol.com', 'protonmail.com', 'lynsoluciones.es'];
@@ -1058,17 +1087,33 @@ function createMagicalParticle() {
                     'autorenew': ['autorenew', 'auto renew', 'auto renewal', 'renewal'],
                     'paymentmethod': ['paymentmethod', 'payment method', 'payment', 'method', 'paid with']
                 };
-                
-                // Known account corrections for specific problems
-                this.knownCorrections = [
-                    { pattern: /hendrelhh@gmail\.com/i, correction: "Whendrelhh@gmail.com" },
-                    { pattern: /APP_STORE_AUTO_RENEWABLE([A-Za-z]+@)/i, correction: "APP_STORE_AUTO_RENEWABLE | $1" }
-                ];
             }
             
             // Update formatting options
             setOptions(options) {
                 this.options = { ...this.options, ...options };
+            }
+            
+            // Set removal patterns
+            setRemovalPatterns(patterns) {
+                if (patterns && patterns.length > 0) {
+                    // Convert string patterns to RegExp objects
+                    this.removalPatterns = patterns.map(pattern => {
+                        if (typeof pattern === 'string' && pattern.trim()) {
+                            try {
+                                return new RegExp(pattern, 'g');
+                            } catch (error) {
+                                console.error('Invalid regex pattern:', pattern, error);
+                                // Add a notification for invalid patterns
+                                if (typeof showNotification === 'function') {
+                                    showNotification(`Invalid pattern: ${pattern}`, 'error');
+                                }
+                                return null;
+                            }
+                        }
+                        return pattern;
+                    }).filter(pattern => pattern !== null);
+                }
             }
             
             // Main formatting function
@@ -1164,21 +1209,56 @@ function createMagicalParticle() {
                 let processed = input;
                 
                 // Fix known issues with specific patterns
-                this.knownCorrections.forEach(correction => {
-                    processed = processed.replace(correction.pattern, correction.correction);
-                });
-                
-                // Add space after colons if missing
-                processed = processed.replace(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+):([^ ])/g, '$1: $2');
-                
-                // Normalize separators
-                processed = processed.replace(/\s*\|\s*/g, ' | ');
+                processed = processed.replace(/\s*\|\s*/g, ' | '); // Normalize separators
                 
                 // Ensure payment methods are properly separated
-                const paymentMethodRegex = new RegExp(`(PaymentMethod\\s*=\\s*(${Object.keys(this.paymentMethods).join('|')}))([a-zA-Z0-9._-]+@)`, 'g');
+                const paymentMethodsKeys = Object.keys(this.paymentMethods).join('|');
+                const paymentMethodRegex = new RegExp(`(PaymentMethod\\s*=\\s*(${paymentMethodsKeys}))([a-zA-Z0-9._-]+@)`, 'g');
                 processed = processed.replace(paymentMethodRegex, '$1 | $3');
                 
                 return processed;
+            }
+            
+            // Clean up passwords by removing TG IDs and other unwanted patterns
+            cleanPassword(password) {
+                if (!password) return password;
+                let cleaned = password.trim();
+                
+                // Apply removal patterns if enabled
+                if (this.options.removeTags && this.removalPatterns.length > 0) {
+                    // First, check for and handle the specific "by@L_E_O_U_S_E_S" pattern
+                    if (cleaned.includes("by@L_E_O_U_S_E_S") || 
+                        cleaned.includes("by@l_e_o_u_s_e_s") ||
+                        cleaned.includes("BY@L_E_O_U_S_E_S")) {
+                        
+                        // Find the position of the tag
+                        const tagPos = Math.max(
+                            cleaned.indexOf("by@L_E_O_U_S_E_S"),
+                            cleaned.indexOf("by@l_e_o_u_s_e_s"),
+                            cleaned.indexOf("BY@L_E_O_U_S_E_S")
+                        );
+                        
+                        if (tagPos > 0) {
+                            // Truncate at the position of the tag
+                            cleaned = cleaned.substring(0, tagPos).trim();
+                        }
+                    }
+                    
+                    // Then apply all other regex patterns
+                    for (const pattern of this.removalPatterns) {
+                        try {
+                            cleaned = cleaned.replace(pattern, '');
+                        } catch (error) {
+                            console.warn('Error applying pattern:', pattern, error);
+                            // Continue with other patterns
+                        }
+                    }
+                }
+                
+                // Trim any remaining whitespace
+                cleaned = cleaned.trim();
+                
+                return cleaned;
             }
             
             // Strategy 1: Extract accounts by email:password pattern
@@ -1194,7 +1274,10 @@ function createMagicalParticle() {
                 for (let i = 0; i < matches.length; i++) {
                     const match = matches[i];
                     const email = match[1].trim();
-                    const password = match[2].trim();
+                    let password = match[2].trim();
+                    
+                    // Clean the password by removing TG IDs, etc.
+                    password = this.cleanPassword(password);
                     
                     // Find the start and end of this account's data
                     const startPos = match.index;
@@ -1236,7 +1319,10 @@ function createMagicalParticle() {
                     if (!emailPasswordMatch) continue;
                     
                     const email = emailPasswordMatch[1].trim();
-                    const password = emailPasswordMatch[2].trim();
+                    let password = emailPasswordMatch[2].trim();
+                    
+                    // Clean the password by removing TG IDs, etc.
+                    password = this.cleanPassword(password);
                     
                     // Create an account object with the email and password
                     const account = { email, password };
@@ -1294,7 +1380,10 @@ function createMagicalParticle() {
                     if (!emailPasswordMatch) continue;
                     
                     const email = emailPasswordMatch[1].trim();
-                    const password = emailPasswordMatch[2].trim();
+                    let password = emailPasswordMatch[2].trim();
+                    
+                    // Clean the password by removing TG IDs, etc.
+                    password = this.cleanPassword(password);
                     
                     // Create an account object with the email and password
                     const account = { email, password };
@@ -1349,7 +1438,10 @@ function createMagicalParticle() {
                     // Skip if we can't find a password
                     if (!passwordMatch) continue;
                     
-                    const password = passwordMatch[1].trim();
+                    let password = passwordMatch[1].trim();
+                    
+                    // Clean the password by removing TG IDs, etc.
+                    password = this.cleanPassword(password);
                     
                     // Create an account object with the email and password
                     const account = { email, password };
@@ -1396,6 +1488,9 @@ function createMagicalParticle() {
                         const match = context.match(pattern);
                         if (match) {
                             password = match[1].trim();
+                            
+                            // Clean the password by removing TG IDs, etc.
+                            password = this.cleanPassword(password);
                             break;
                         }
                     }
@@ -1473,16 +1568,26 @@ function createMagicalParticle() {
                     }
                     
                     account[fieldName] = value;
+                    
+                    // Track when autoRenew is explicitly provided in the input
+                    if (fieldName === 'autoRenew') {
+                        account.autoRenewExplicit = true;
+                    }
                 }
             }
             
             // Deep inspection for non-standard field formats
             deepFieldInspection(account, data) {
-                // Look for expiration date pattern (YYYY-MM-DD)
-                if (!account.expireDate) {
-                    const dateMatch = data.match(/\b(20\d\d-\d\d-\d\d)\b/);
-                    if (dateMatch) {
-                        account.expireDate = dateMatch[1];
+                // ... existing code ...
+                
+                // Look for auto renew in looser patterns
+                if (account.autoRenew === undefined) {
+                    if (data.match(/\b(?:auto\s*renewal|recurring)\s*[:=]?\s*true\b/i)) {
+                        account.autoRenew = true;
+                        account.autoRenewExplicit = true;  // Add this line
+                    } else if (data.match(/\b(?:auto\s*renewal|recurring)\s*[:=]?\s*false\b/i)) {
+                        account.autoRenew = false;
+                        account.autoRenewExplicit = true;  // Add this line
                     }
                 }
                 
@@ -1560,34 +1665,13 @@ function createMagicalParticle() {
                     
                     uniqueEmails.add(emailKey);
                     
-                    // Apply known corrections
-                    this.applyKnownCorrections(account);
-                    
                     // Ensure consistent field names and formats
                     this.normalizeAccount(account);
                     
                     processed.push(account);
                 }
                 
-                // Sort accounts by email
-                processed.sort((a, b) => a.email.localeCompare(b.email));
-                
                 return processed;
-            }
-            
-            // Apply known corrections to account fields
-            applyKnownCorrections(account) {
-                // Fix known issues with email domains
-                for (const correction of this.knownCorrections) {
-                    if (correction.pattern.test(account.email)) {
-                        account.email = account.email.replace(correction.pattern, correction.correction);
-                    }
-                }
-                
-                // Fix Whendrelhh@gmail.com case specifically
-                if (account.email.toLowerCase().includes('hendrelhh@gmail.com')) {
-                    account.email = 'Whendrelhh@gmail.com';
-                }
             }
             
             // Normalize account fields for consistency
@@ -1600,10 +1684,17 @@ function createMagicalParticle() {
                         // Set default values for missing fields
                         if (field === 'autoRenew') {
                             account[field] = false;
+                            // Initialize the explicit flag when normalizing
+                            account.autoRenewExplicit = false;
                         } else if (field !== 'email' && field !== 'password') {
                             account[field] = null;
                         }
                     }
+                }
+                
+                // Ensure autoRenewExplicit is set even if autoRenew is already defined
+                if (account.autoRenewExplicit === undefined) {
+                    account.autoRenewExplicit = false;
                 }
                 
                 // Normalize autoRenew to be a boolean
@@ -1676,24 +1767,33 @@ function createMagicalParticle() {
                     // Format password
                     output += `Password: \`${account.password}\`\n`;
                     
+                    // Track if we've added any fields after password
+                    let fieldsAdded = false;
+                    
                     // Format plan
                     if (account.plan) {
                         output += `🗓 Plan = ${account.plan}\n`;
+                        fieldsAdded = true;
                     }
                     
                     // Format expiration date
                     if (account.expireDate) {
                         output += `⏳ ExpireDate = ${account.expireDate}\n`;
+                        fieldsAdded = true;
                     }
                     
                     // Format days left
                     if (account.daysLeft) {
                         output += `⏳ DaysLeft = ${account.daysLeft}\n`;
+                        fieldsAdded = true;
                     }
                     
-                    // Format auto renew
-                    const autoRenewSymbol = account.autoRenew ? '✅' : '❌';
-                    output += `AutoRenew: ${autoRenewSymbol}\n`;
+                    // Format auto renew - ONLY if it was explicitly provided in the input
+                    if (account.autoRenewExplicit === true) {
+                        const autoRenewSymbol = account.autoRenew ? '✅' : '❌';
+                        output += `AutoRenew: ${autoRenewSymbol}\n`;
+                        fieldsAdded = true;
+                    }
                     
                     // Format payment method
                     if (account.paymentMethod) {
@@ -1708,6 +1808,10 @@ function createMagicalParticle() {
                         }
                         
                         output += `${paymentEmoji} PaymentMethod = ${account.paymentMethod}`;
+                        // Add a newline if this is not the last field (though it typically would be)
+                        if (!fieldsAdded) {
+                            output += '\n';
+                        }
                     }
                 });
                 
@@ -1736,12 +1840,24 @@ function createMagicalParticle() {
                 aggressiveParsing: document.getElementById('aggressive-parsing').checked,
                 multiStrategy: document.getElementById('multi-strategy').checked,
                 deepInspection: document.getElementById('deep-inspection').checked,
-                errorRecovery: document.getElementById('error-recovery').checked
+                errorRecovery: document.getElementById('error-recovery').checked,
+                removeTags: document.getElementById('remove-tags').checked
             };
             
+            // Get custom removal patterns from the settings
+            const patternInputs = document.querySelectorAll('.pattern-input');
+            const customPatterns = Array.from(patternInputs)
+                .map(input => input.value.trim())
+                .filter(pattern => pattern.length > 0);
+            
             // Create formatter instance
-            const formatter = new SupremeFormatter();
+            const formatter = new UltraFormatter();
             formatter.setOptions(options);
+            
+            // Set custom patterns if provided
+            if (customPatterns.length > 0) {
+                formatter.setRemovalPatterns(customPatterns);
+            }
             
             try {
                 // Format the data
@@ -1792,6 +1908,55 @@ function createMagicalParticle() {
                 .catch(err => showNotification('Failed to copy: ' + err, 'error'));
         });
         
+        // Portal activation
+        document.getElementById('portal-button').addEventListener('click', function(e) {
+            // Prevent instant navigation
+            e.preventDefault();
+            
+            // Create URL to navigate to
+            const portalUrl = 'https://github.com/Darkphoenixir';
+            
+            // Activate portal effects
+            document.body.classList.add('portal-active');
+            
+            // Create additional magical particles
+            for (let i = 0; i < 20; i++) {
+                createMagicalParticle();
+            }
+            
+            // Navigate after animation completes
+            setTimeout(function() {
+                window.open(portalUrl, '_blank');
+                // Reset effects after a moment
+                setTimeout(function() {
+                    document.body.classList.remove('portal-active');
+                }, 500);
+            }, 2000);
+        });
+        
+        // Create magical particles for portal effect
+        function createMagicalParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle portal-particle';
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            particle.style.opacity = `${Math.random() * 0.7 + 0.3}`;
+            particle.style.width = `${Math.random() * 10 + 5}px`;
+            particle.style.height = particle.style.width;
+            particle.style.background = `hsl(${260 + Math.random() * 60}, 100%, 70%)`;
+            particle.style.boxShadow = `0 0 ${Math.random() * 10 + 5}px ${particle.style.background}`;
+            particle.style.zIndex = '15';
+            
+            document.getElementById('particles').appendChild(particle);
+            
+            // Remove particle after animation
+            setTimeout(() => {
+                if (particle.parentNode) {
+                    particle.parentNode.removeChild(particle);
+                }
+            }, 2500);
+        }
+        
         function showNotification(message, type) {
             const notification = document.getElementById('notification');
             notification.textContent = message;
@@ -1802,6 +1967,20 @@ function createMagicalParticle() {
                 notification.classList.remove('show');
             }, 3000);
         }
+
+        // Properly handle remove pattern button
+        document.body.addEventListener('click', function(e) {
+            // Check if the clicked element is a remove-pattern button
+            if (e.target.classList.contains('remove-pattern') || 
+                (e.target.parentElement && e.target.parentElement.classList.contains('remove-pattern'))) {
+                
+                // Get the pattern field to remove
+                const patternField = e.target.closest('.pattern-field');
+                if (patternField) {
+                    patternField.remove();
+                }
+            }
+        });
     </script>
 </body>
 </html>
