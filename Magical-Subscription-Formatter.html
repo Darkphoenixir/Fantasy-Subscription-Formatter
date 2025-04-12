@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fantasy Subscription Formatter</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/MotionPathPlugin.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
         
@@ -1114,21 +1116,217 @@
                 opacity: 0;
             }
         }
+
+        /* Initial play overlay */
+        .music-start-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 19, 37, 0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+        
+        .music-start-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .music-start-button {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            box-shadow: 0 5px 30px rgba(155, 109, 255, 0.7);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite ease-in-out;
+        }
+        
+        .music-start-button i {
+            font-size: 2rem;
+        }
+        
+        .music-start-text {
+            margin-top: 1.5rem;
+            color: var(--light);
+            font-size: 1.2rem;
+            text-align: center;
+            max-width: 80%;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 5px 30px rgba(155, 109, 255, 0.7);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 5px 40px rgba(155, 109, 255, 0.9);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 5px 30px rgba(155, 109, 255, 0.7);
+            }
+        }
+        
+        /* Enhanced visualizations */
+        .immersive-visualizer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+        
+        .immersive-visualizer.active {
+            opacity: 1;
+        }
+        
+        .frequency-circle {
+            position: absolute;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle at center, rgba(155, 109, 255, 0.7) 0%, transparent 70%);
+            opacity: 0;
+            mix-blend-mode: screen;
+        }
+        
+        .beat-ripple {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            background: transparent;
+            border: 2px solid rgba(155, 109, 255, 0.5);
+            opacity: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .beat-ripple.animate {
+            animation: rippleEffect 2s ease-out forwards;
+        }
+        
+        @keyframes rippleEffect {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.7;
+                border-width: 2px;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(20);
+                opacity: 0;
+                border-width: 1px;
+            }
+        }
+        
+        .music-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        /* Enhanced reactive elements */
+        .container {
+            transition: transform 0.2s ease-out;
+        }
+        
+        .music-reactive {
+            transition: all 0.2s ease;
+        }
+        
+        /* Magic path for particles to follow */
+        .magic-path {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .frequency-particle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, var(--primary) 0%, transparent 70%);
+            mix-blend-mode: screen;
+            filter: blur(2px);
+            opacity: 0.7;
+            z-index: -1;
+        }
+        
+        /* Enhance existing elements with reactive classes */
+        .header, .icon-wrapper, .settings-toggle, 
+        .button, .settings-panel h3, .section-title {
+            transition: all 0.3s ease;
+        }
+        
+        .glow-effect {
+            box-shadow: 0 0 10px rgba(155, 109, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 8px rgba(155, 109, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        /* Enhanced floating icons */
+        .floating-icon {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
     </style>
 </head>
 <body>
     <div class="particles" id="particles"></div>
     
     <!-- Audio Element (Hidden) -->
-    <audio id="background-music" loop preload="auto">
+    <audio id="background-music" loop>
         <source src="" type="audio/mpeg" id="audio-source">
         Your browser does not support the audio element.
     </audio>
     
-    <!-- Music Visualization Container -->
+    <!-- Music Start Overlay -->
+    <div class="music-start-overlay" id="music-start-overlay">
+        <div class="music-start-button">
+            <i class="fas fa-play"></i>
+        </div>
+        <div class="music-start-text">
+            Click to begin the magical audio experience
+            <br><small>Headphones recommended for full immersion</small>
+        </div>
+    </div>
+    
+    <!-- Enhanced Music Visualization Container -->
     <div class="visualizer-container" id="visualizer-container">
         <canvas id="visualizer"></canvas>
     </div>
+    
+    <!-- Immersive Visualizer -->
+    <div class="immersive-visualizer" id="immersive-visualizer"></div>
+    <div class="magic-path" id="magic-path"></div>
     
     <!-- Music Player -->
     <div class="music-player" id="music-player">
@@ -2329,6 +2527,9 @@
         const visualizerContainer = document.getElementById('visualizer-container');
         const musicProgressBar = document.getElementById('music-progress-bar');
         const musicNotification = document.getElementById('music-notification');
+        const musicStartOverlay = document.getElementById('music-start-overlay');
+        const immersiveVisualizer = document.getElementById('immersive-visualizer');
+        const magicPath = document.getElementById('magic-path');
         
         // Playlist of music tracks
         // To add your own tracks:
@@ -2339,33 +2540,33 @@
             {
                 title: "Superman",
                 artist: "Alhanii",
-                src: "/music/Superman - Instrumental Slowed - Alhanii.mp3"
+                src: "music/Superman - Instrumental Slowed - Alhanii.mp3"
             },
             {
                 title: "Медуза",
                 artist: "Six Dior",
-                src: "/music/Медуза - Best Part - Six Dior.mp3"
+                src: "music/Медуза - Best Part - Six Dior.mp3"
             },
             {
                 title: "Street School",
                 artist: "Zag Beatmaker",
-                src: "/music/Street School - Zag Beatmaker.mp3"
+                src: "music/Street School - Zag Beatmaker.mp3"
             },
             {
                 title: "Romantic Homicide",
                 artist: "Alhanii",
-                src: "/music/Romantic Homicide - Instrumental - Alhanii.mp3"
+                src: "music/Romantic Homicide - Instrumental - Alhanii.mp3"
             },
             {
                 title: "Love Story",
                 artist: "Alhanii",
-                src: "/music/Love Story - Instrumental Slowed - Alhanii.mp3"
+                src: "music/Love Story - Instrumental Slowed - Alhanii.mp3"
             }
             // Add more tracks as needed:
             // {
             //     title: "Your Track Title",
             //     artist: "Artist Name",
-            //     src: "music/your-track-filename.mp3" 
+            //     src: "music/your-track-filename.mp3"  // Local file in the "music" folder
             // }
         ];
         
@@ -2373,8 +2574,13 @@
         let currentTrackIndex = 0;
         let isPlaying = false;
         let visualizerActive = false;
+        let immersiveMode = false;
         let shuffleActive = false;
         let animationFrame;
+        let beatDetected = false;
+        let lastBeatTime = 0;
+        let sensitivityThreshold = 130; // Beat detection threshold
+        let reactiveElements = [];
         
         // Audio Context for Visualization
         let audioContext;
@@ -2384,12 +2590,105 @@
         let visualizerCanvas;
         let visualizerCtx;
         
-        // Initialize the music player
-        function initMusicPlayer() {
-            // Show the player with animation
+        // Show music start overlay
+        setTimeout(() => {
+            musicStartOverlay.classList.add('show');
+        }, 1000);
+        
+        // Start music on overlay click (required for audio to work in most browsers)
+        musicStartOverlay.addEventListener('click', () => {
+            musicStartOverlay.classList.remove('show');
+            
+            // Initialize audio context and start playing music
+            initAudioContext();
+            
+            // Show music player
             setTimeout(() => {
                 musicPlayer.classList.add('show');
-            }, 2000);
+            }, 500);
+            
+            // Enable immersive visualizer
+            immersiveMode = true;
+            immersiveVisualizer.classList.add('active');
+            startImmersiveVisualizer();
+            
+            // Start playing music
+            togglePlayback(true);
+        });
+        
+        // Initialize Audio Context
+        function initAudioContext() {
+            if (!audioContext) {
+                try {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    analyser = audioContext.createAnalyser();
+                    source = audioContext.createMediaElementSource(backgroundMusic);
+                    source.connect(analyser);
+                    analyser.connect(audioContext.destination);
+                    
+                    // Set up analyzer
+                    analyser.fftSize = 256;
+                    const bufferLength = analyser.frequencyBinCount;
+                    dataArray = new Uint8Array(bufferLength);
+                    
+                    // Set up visualizer canvas
+                    visualizerCanvas = document.getElementById('visualizer');
+                    visualizerCtx = visualizerCanvas.getContext('2d');
+                    
+                    // Set canvas size
+                    resizeCanvas();
+                    window.addEventListener('resize', resizeCanvas);
+                    
+                    console.log("Audio context initialized successfully");
+                } catch (e) {
+                    console.error("Web Audio API error:", e);
+                    showMusicNotification('Audio initialization error. Please try reloading the page.');
+                }
+            }
+        }
+        
+        // Toggle playback with optional force state
+        function togglePlayback(forceState = null) {
+            const newState = forceState !== null ? forceState : !isPlaying;
+            
+            if (newState && !isPlaying) {
+                // Initialize context if needed
+                if (!audioContext) {
+                    initAudioContext();
+                }
+                
+                backgroundMusic.play().then(() => {
+                    isPlaying = true;
+                    playIcon.className = 'fas fa-pause';
+                    showMusicNotification(`Now playing: ${playlist[currentTrackIndex].title}`);
+                    startOrbCreation();
+                    startImmersiveVisualizer();
+                    
+                    // Add reactive classes to elements
+                    addReactiveClasses();
+                }).catch(e => {
+                    console.error("Error playing audio:", e);
+                    showMusicNotification('Error playing music. Try clicking anywhere on the page first.');
+                });
+            } else if (!newState && isPlaying) {
+                backgroundMusic.pause();
+                isPlaying = false;
+                playIcon.className = 'fas fa-play';
+                showMusicNotification('Music paused');
+                stopOrbCreation();
+                
+                // Remove reactive animation
+                if (animationFrame) {
+                    cancelAnimationFrame(animationFrame);
+                    animationFrame = null;
+                }
+            }
+        }
+        
+        // Initialize the music player
+        function initMusicPlayer() {
+            // Select a random track initially
+            currentTrackIndex = Math.floor(Math.random() * playlist.length);
             
             // Shuffle the playlist if enabled
             if (shuffleActive) {
@@ -2401,6 +2700,36 @@
             
             // Set initial volume
             backgroundMusic.volume = volumeSlider.value / 100;
+            
+            // Find elements to add reactive effects to
+            findReactiveElements();
+        }
+        
+        // Add reactive classes to elements for music visualization
+        function addReactiveClasses() {
+            // Add reactive classes to certain elements
+            document.querySelectorAll('.header, .section-title, .feature-tag, .settings-toggle, h3, .button')
+                .forEach(el => {
+                    el.classList.add('music-reactive');
+                    reactiveElements.push(el);
+                });
+            
+            // Add glow effects to buttons and input areas
+            document.querySelectorAll('.button, .input-area, .output-area')
+                .forEach(el => {
+                    el.classList.add('glow-effect');
+                });
+            
+            // Add text glow effects
+            document.querySelectorAll('.section-title, h3, .header')
+                .forEach(el => {
+                    el.classList.add('glow-text');
+                });
+        }
+        
+        // Find all elements that can be reactive to music
+        function findReactiveElements() {
+            reactiveElements = Array.from(document.querySelectorAll('.music-reactive, .floating-icon, .particle'));
         }
         
         // Load a specific track
@@ -2435,85 +2764,17 @@
             musicProgressBar.style.width = '0%';
         }
         
-        // Play the previous track
-        function playPreviousTrack() {
-            loadTrack(currentTrackIndex - 1);
-        }
-        
-        // Play the next track
-        function playNextTrack() {
-            loadTrack(currentTrackIndex + 1);
-        }
-        
-        // Shuffle the playlist
-        function shufflePlaylist() {
-            for (let i = playlist.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [playlist[i], playlist[j]] = [playlist[j], playlist[i]];
-            }
-            
-            // If we're shuffling while playing, reload the current track
-            if (isPlaying) {
-                currentTrackIndex = 0;
-                loadTrack(currentTrackIndex);
-            }
-            
-            showMusicNotification('Playlist shuffled');
-        }
-        
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
-            // Create floating icons and particles (existing code)
+            // Create floating icons and particles
             // ... existing code ...
             
-            // Initialize the music player with a random track
-            currentTrackIndex = Math.floor(Math.random() * playlist.length);
+            // Initialize the music player
             initMusicPlayer();
             
             // Music Toggle
             musicToggle.addEventListener('click', () => {
-                if (!audioContext) {
-                    // Initialize Audio Context for the first time
-                    try {
-                        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                        analyser = audioContext.createAnalyser();
-                        source = audioContext.createMediaElementSource(backgroundMusic);
-                        source.connect(analyser);
-                        analyser.connect(audioContext.destination);
-                        
-                        // Set up analyzer
-                        analyser.fftSize = 256;
-                        const bufferLength = analyser.frequencyBinCount;
-                        dataArray = new Uint8Array(bufferLength);
-                        
-                        // Set up visualizer canvas
-                        visualizerCanvas = document.getElementById('visualizer');
-                        visualizerCtx = visualizerCanvas.getContext('2d');
-                        
-                        // Set canvas size
-                        resizeCanvas();
-                        window.addEventListener('resize', resizeCanvas);
-                    } catch (e) {
-                        console.error("Web Audio API is not supported in this browser", e);
-                    }
-                }
-                
-                if (isPlaying) {
-                    backgroundMusic.pause();
-                    playIcon.className = 'fas fa-play';
-                    showMusicNotification('Music paused');
-                    stopOrbCreation();
-                } else {
-                    backgroundMusic.play().catch(e => {
-                        console.error("Error playing audio", e);
-                        showMusicNotification('Error playing music');
-                    });
-                    playIcon.className = 'fas fa-pause';
-                    showMusicNotification(`Now playing: ${playlist[currentTrackIndex].title}`);
-                    startOrbCreation();
-                }
-                
-                isPlaying = !isPlaying;
+                togglePlayback();
             });
             
             // Previous Track button
@@ -2577,7 +2838,261 @@
             });
         });
         
-        // ... existing functions and code ...
+        // Start immersive visualizer effects
+        function startImmersiveVisualizer() {
+            if (!isPlaying || !analyser || !dataArray) return;
+            
+            // Clear any existing animation frame
+            if (animationFrame) {
+                cancelAnimationFrame(animationFrame);
+            }
+            
+            animationFrame = requestAnimationFrame(updateImmersiveVisualizer);
+        }
+        
+        // Update the immersive visualizer
+        function updateImmersiveVisualizer() {
+            if (!isPlaying) {
+                animationFrame = null;
+                return;
+            }
+            
+            animationFrame = requestAnimationFrame(updateImmersiveVisualizer);
+            
+            // Get frequency data
+            analyser.getByteFrequencyData(dataArray);
+            
+            // Calculate average frequency and beat detection
+            const average = calculateAverageFrequency(dataArray);
+            const isBeat = detectBeat(dataArray, average);
+            
+            // Update standard visualizer if active
+            if (visualizerActive) {
+                drawVisualizer();
+            }
+            
+            // Create frequency circles based on audio data
+            if (Math.random() < 0.1) {
+                createFrequencyCircle(average);
+            }
+            
+            // Create beat ripple when beat is detected
+            if (isBeat) {
+                createBeatRipple();
+                
+                // Make particles react to beat
+                document.querySelectorAll('.floating-icon').forEach(icon => {
+                    icon.style.transform = `scale(${1 + average/600})`;
+                    setTimeout(() => {
+                        icon.style.transform = 'scale(1)';
+                    }, 200);
+                });
+            }
+            
+            // Update reactive elements
+            updateReactiveElements(dataArray, average);
+            
+            // Create frequency particles that follow a path
+            if (Math.random() < 0.05) {
+                createFrequencyParticle(average);
+            }
+        }
+        
+        // Calculate the average frequency from the data array
+        function calculateAverageFrequency(dataArray) {
+            return dataArray.reduce((acc, val) => acc + val, 0) / dataArray.length;
+        }
+        
+        // Detect a beat in the music
+        function detectBeat(dataArray, average) {
+            // Focus on bass frequencies (lower indices in the array)
+            const bassAvg = dataArray.slice(0, 10).reduce((acc, val) => acc + val, 0) / 10;
+            
+            // Check if we have a beat and it's been at least 300ms since the last one
+            const now = Date.now();
+            if (bassAvg > sensitivityThreshold && now - lastBeatTime > 300) {
+                lastBeatTime = now;
+                return true;
+            }
+            return false;
+        }
+        
+        // Create a frequency circle based on audio data
+        function createFrequencyCircle(intensity) {
+            if (!immersiveVisualizer) return;
+            
+            const circle = document.createElement('div');
+            circle.className = 'frequency-circle';
+            
+            // Random position
+            const xPos = Math.random() * window.innerWidth;
+            const yPos = Math.random() * window.innerHeight;
+            circle.style.left = `${xPos}px`;
+            circle.style.top = `${yPos}px`;
+            
+            // Size based on frequency intensity
+            const size = 20 + (intensity * 1.2);
+            circle.style.width = `${size}px`;
+            circle.style.height = `${size}px`;
+            
+            // Opacity based on intensity
+            const opacity = Math.min(0.7, intensity / 255);
+            circle.style.opacity = opacity;
+            
+            // Color based on frequency (more vibrant for higher frequencies)
+            const hue = 270 + (intensity / 255) * 40;
+            circle.style.background = `radial-gradient(circle at center, hsla(${hue}, 80%, 60%, ${opacity}) 0%, transparent 70%)`;
+            
+            immersiveVisualizer.appendChild(circle);
+            
+            // Animate and remove
+            gsap.to(circle, {
+                duration: 3 + Math.random() * 2,
+                scale: 3 + Math.random() * 2,
+                opacity: 0,
+                ease: "power2.out",
+                onComplete: () => {
+                    if (circle.parentNode) {
+                        circle.parentNode.removeChild(circle);
+                    }
+                }
+            });
+        }
+        
+        // Create a beat ripple effect
+        function createBeatRipple() {
+            const ripple = document.createElement('div');
+            ripple.className = 'beat-ripple';
+            document.body.appendChild(ripple);
+            
+            // Add animation class
+            ripple.classList.add('animate');
+            
+            // Remove after animation completes
+            setTimeout(() => {
+                if (ripple.parentNode) {
+                    ripple.parentNode.removeChild(ripple);
+                }
+            }, 2000);
+        }
+        
+        // Create a particle that follows a path based on audio frequencies
+        function createFrequencyParticle(intensity) {
+            if (!magicPath) return;
+            
+            const particle = document.createElement('div');
+            particle.className = 'frequency-particle';
+            
+            // Size based on frequency
+            const size = 5 + (intensity / 20);
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            // Random starting position along the edges
+            let startX, startY;
+            const edge = Math.floor(Math.random() * 4);
+            
+            switch(edge) {
+                case 0: // Top
+                    startX = Math.random() * window.innerWidth;
+                    startY = 0;
+                    break;
+                case 1: // Right
+                    startX = window.innerWidth;
+                    startY = Math.random() * window.innerHeight;
+                    break;
+                case 2: // Bottom
+                    startX = Math.random() * window.innerWidth;
+                    startY = window.innerHeight;
+                    break;
+                case 3: // Left
+                    startX = 0;
+                    startY = Math.random() * window.innerHeight;
+                    break;
+            }
+            
+            particle.style.left = `${startX}px`;
+            particle.style.top = `${startY}px`;
+            
+            // Color based on frequency
+            const hue = 260 + (intensity / 255) * 60;
+            const brightness = 50 + (intensity / 255) * 30;
+            particle.style.background = `radial-gradient(circle at center, hsl(${hue}, 70%, ${brightness}%) 0%, transparent 70%)`;
+            
+            magicPath.appendChild(particle);
+            
+            // Create a random path for the particle to follow
+            const controlPoints = [];
+            const numPoints = 3 + Math.floor(Math.random() * 3);
+            
+            for (let i = 0; i < numPoints; i++) {
+                controlPoints.push({
+                    x: Math.random() * window.innerWidth,
+                    y: Math.random() * window.innerHeight
+                });
+            }
+            
+            // Final destination
+            const endX = Math.random() * window.innerWidth;
+            const endY = Math.random() * window.innerHeight;
+            
+            // Animate along the path
+            gsap.to(particle, {
+                duration: 5 + Math.random() * 3,
+                motionPath: {
+                    path: controlPoints,
+                    curviness: 1.5
+                },
+                left: endX,
+                top: endY,
+                scale: 0.2,
+                opacity: 0,
+                ease: "power1.inOut",
+                onComplete: () => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                }
+            });
+        }
+        
+        // Update elements to react to music
+        function updateReactiveElements(dataArray, average) {
+            if (!reactiveElements.length) return;
+            
+            // Different frequency bands for different effects
+            const bassAvg = dataArray.slice(0, 10).reduce((acc, val) => acc + val, 0) / 10;
+            const midAvg = dataArray.slice(10, 20).reduce((acc, val) => acc + val, 0) / 10;
+            const highAvg = dataArray.slice(20, 30).reduce((acc, val) => acc + val, 0) / 10;
+            
+            // Scale the container slightly with bass
+            const container = document.querySelector('.container');
+            if (container) {
+                const scaleAmount = 1 + (bassAvg / 2000);
+                container.style.transform = `scale(${scaleAmount})`;
+            }
+            
+            // Make reactive elements pulse with the mid-frequencies
+            reactiveElements.forEach((el, i) => {
+                // Apply different effects based on element type
+                if (el.classList.contains('floating-icon')) {
+                    const moveAmount = (midAvg / 255) * 10;
+                    el.style.transform = `translateY(${-moveAmount}px)`;
+                } else if (el.classList.contains('section-title') || el.classList.contains('header')) {
+                    const glowAmount = (highAvg / 255) * 15;
+                    el.style.textShadow = `0 0 ${glowAmount}px rgba(155, 109, 255, 0.8)`;
+                } else if (el.classList.contains('glow-effect')) {
+                    const glowAmount = (midAvg / 255) * 15;
+                    el.style.boxShadow = `0 0 ${glowAmount}px rgba(155, 109, 255, 0.5)`;
+                } else {
+                    // For other elements, just pulse slightly
+                    const pulseAmount = 1 + ((midAvg / 255) * 0.05);
+                    el.style.transform = `scale(${pulseAmount})`;
+                }
+            });
+        }
+        
+        // ... existing functions ...
 
         // ... existing code ...
 
@@ -2747,6 +3262,36 @@
                 cancelAnimationFrame(animationFrame);
                 animationFrame = null;
             }
+        }
+
+        // ... existing code ...
+
+        // ... existing code ...
+
+        // Play the previous track
+        function playPreviousTrack() {
+            loadTrack(currentTrackIndex - 1);
+        }
+        
+        // Play the next track
+        function playNextTrack() {
+            loadTrack(currentTrackIndex + 1);
+        }
+        
+        // Shuffle the playlist
+        function shufflePlaylist() {
+            for (let i = playlist.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [playlist[i], playlist[j]] = [playlist[j], playlist[i]];
+            }
+            
+            // If we're shuffling while playing, reload the current track
+            if (isPlaying) {
+                currentTrackIndex = 0;
+                loadTrack(currentTrackIndex);
+            }
+            
+            showMusicNotification('Playlist shuffled');
         }
     </script>
 </body>
