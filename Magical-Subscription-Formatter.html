@@ -831,10 +831,341 @@
                 opacity: 0;
             }
         }
+
+        /* Music player and visualization styles */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(26, 19, 37, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 0.7rem 1rem;
+            border-radius: 50px;
+            border: 1px solid rgba(155, 109, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            transform: translateY(100px);
+            opacity: 0;
+        }
+        
+        .music-player.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .music-player:hover {
+            border-color: rgba(155, 109, 255, 0.7);
+            box-shadow: 0 5px 20px rgba(155, 109, 255, 0.5);
+        }
+        
+        .music-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .music-toggle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .music-toggle:hover {
+            transform: scale(1.1);
+        }
+        
+        .music-toggle i {
+            font-size: 1rem;
+        }
+        
+        .prev-track, .next-track {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(155, 109, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--light);
+            transition: all 0.3s ease;
+        }
+        
+        .prev-track:hover, .next-track:hover {
+            background: rgba(155, 109, 255, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .shuffle-toggle {
+            color: var(--light);
+            font-size: 0.8rem;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-left: 0.3rem;
+        }
+        
+        .shuffle-toggle.active {
+            color: var(--secondary);
+            opacity: 1;
+        }
+        
+        .shuffle-toggle:hover {
+            opacity: 1;
+        }
+        
+        .music-info {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+        
+        .music-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--light);
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .music-artist {
+            font-size: 0.7rem;
+            color: rgba(224, 211, 255, 0.7);
+        }
+        
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .volume-icon {
+            color: var(--light);
+            font-size: 0.8rem;
+            width: 12px;
+        }
+        
+        .volume-slider {
+            -webkit-appearance: none;
+            width: 60px;
+            height: 4px;
+            background: rgba(155, 109, 255, 0.3);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--secondary);
+            cursor: pointer;
+            box-shadow: -80px 0 0 80px var(--secondary);
+        }
+        
+        .volume-slider:focus {
+            outline: none;
+        }
+        
+        .visualizer-toggle {
+            color: var(--light);
+            font-size: 0.8rem;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .visualizer-toggle:hover {
+            opacity: 1;
+        }
+        
+        .visualizer-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        
+        .visualizer-container.active {
+            opacity: 0.7;
+        }
+        
+        .visualizer-container canvas {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .music-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: rgba(155, 109, 255, 0.2);
+        }
+        
+        .music-progress-bar {
+            height: 100%;
+            background: var(--secondary);
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+        
+        .music-notification {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            padding: 0.7rem 1rem;
+            background: rgba(26, 19, 37, 0.8);
+            border-radius: 10px;
+            border: 1px solid rgba(155, 109, 255, 0.3);
+            color: var(--light);
+            transform: translateX(200px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .music-notification.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        
+        .sound-orb {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, rgba(155, 109, 255, 0.8) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+            animation: orbFloat 5s infinite ease-in-out;
+            opacity: 0;
+        }
+        
+        @keyframes orbFloat {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-20px) scale(1.1);
+            }
+        }
+        
+        /* Responsive adaptations for the music player */
+        @media (max-width: 768px) {
+            .music-player {
+                bottom: 10px;
+                right: 10px;
+                padding: 0.5rem 0.7rem;
+            }
+            
+            .music-title {
+                max-width: 100px;
+            }
+            
+            .volume-slider {
+                width: 40px;
+            }
+        }
+        
+        .music-floater {
+            position: fixed;
+            top: -20px;
+            left: -20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, rgba(155, 109, 255, 0.6) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 50;
+            animation: musicFloat 3s infinite ease-in-out;
+            opacity: 0;
+        }
+        
+        @keyframes musicFloat {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) scale(0);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="particles" id="particles"></div>
+    
+    <!-- Audio Element (Hidden) -->
+    <audio id="background-music" loop preload="auto">
+        <source src="" type="audio/mpeg" id="audio-source">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <!-- Music Visualization Container -->
+    <div class="visualizer-container" id="visualizer-container">
+        <canvas id="visualizer"></canvas>
+    </div>
+    
+    <!-- Music Player -->
+    <div class="music-player" id="music-player">
+        <div class="music-controls">
+            <div class="prev-track" id="prev-track">
+                <i class="fas fa-step-backward"></i>
+            </div>
+            <div class="music-toggle" id="music-toggle">
+                <i class="fas fa-play" id="play-icon"></i>
+            </div>
+            <div class="next-track" id="next-track">
+                <i class="fas fa-step-forward"></i>
+            </div>
+        </div>
+        <div class="music-info">
+            <div class="music-title" id="music-title">Magical Track</div>
+            <div class="music-artist" id="music-artist">Enchanted Artist</div>
+        </div>
+        <div class="volume-control">
+            <i class="fas fa-volume-up volume-icon"></i>
+            <input type="range" min="0" max="100" value="70" class="volume-slider" id="volume-slider">
+        </div>
+        <div class="visualizer-toggle" id="visualizer-toggle">
+            <i class="fas fa-wave-square"></i>
+        </div>
+        <div class="shuffle-toggle" id="shuffle-toggle">
+            <i class="fas fa-random"></i>
+        </div>
+        <div class="music-progress">
+            <div class="music-progress-bar" id="music-progress-bar"></div>
+        </div>
+    </div>
+    
+    <!-- Music Notification -->
+    <div class="music-notification" id="music-notification">
+        Music is now playing
+    </div>
     
     <div class="container">
         <header>
@@ -968,7 +1299,7 @@
         </div>
         
         <footer>
-            <p>Created by ✨ pilixy ✨ | Fantasy Subscription Formatter</p>
+            <p>Created with ✨ magical code ✨ | Fantasy Subscription Formatter</p>
         </footer>
     </div>
     
@@ -1006,11 +1337,11 @@
             
             for (let i = 0; i < numberOfParticles; i++) {
                 const particle = document.createElement('div');
-                particle.className = 'particle';
+                particle.className = 'particle portal-particle';
                 particle.style.left = `${Math.random() * 100}%`;
                 particle.style.top = `${Math.random() * 100}%`;
                 particle.style.opacity = `${Math.random() * 0.5 + 0.1}`;
-                particle.style.width = `${Math.random() * 4 + 1}px`;
+                particle.style.width = `${Math.random() * 10 + 5}px`;
                 particle.style.height = particle.style.width;
                 particle.style.animationDuration = `${15 + Math.random() * 30}s`;
                 particle.style.animationDelay = `${Math.random() * 5}s`;
@@ -1981,6 +2312,442 @@
                 }
             }
         });
+
+        // Music Player Setup
+        const backgroundMusic = document.getElementById('background-music');
+        const audioSource = document.getElementById('audio-source');
+        const musicPlayer = document.getElementById('music-player');
+        const musicToggle = document.getElementById('music-toggle');
+        const playIcon = document.getElementById('play-icon');
+        const prevTrack = document.getElementById('prev-track');
+        const nextTrack = document.getElementById('next-track');
+        const musicTitle = document.getElementById('music-title');
+        const musicArtist = document.getElementById('music-artist');
+        const volumeSlider = document.getElementById('volume-slider');
+        const visualizerToggle = document.getElementById('visualizer-toggle');
+        const shuffleToggle = document.getElementById('shuffle-toggle');
+        const visualizerContainer = document.getElementById('visualizer-container');
+        const musicProgressBar = document.getElementById('music-progress-bar');
+        const musicNotification = document.getElementById('music-notification');
+        
+        // Playlist of music tracks
+        // To add your own tracks:
+        // 1. Place MP3 files in a folder called "music" in the same directory as your HTML file
+        // 2. Or use direct URLs to MP3 files hosted online
+        // 3. Update the playlist array below with your track information
+        const playlist = [
+            {
+                title: "Superman",
+                artist: "Alhanii",
+                src: "/music/Superman - Instrumental Slowed - Alhanii.mp3"
+            },
+            {
+                title: "Медуза",
+                artist: "Six Dior",
+                src: "/music/Медуза - Best Part - Six Dior.mp3"
+            },
+            {
+                title: "Street School",
+                artist: "Zag Beatmaker",
+                src: "/music/Street School - Zag Beatmaker.mp3"
+            },
+            {
+                title: "Romantic Homicide",
+                artist: "Alhanii",
+                src: "/music/Romantic Homicide - Instrumental - Alhanii.mp3"
+            },
+            {
+                title: "Love Story",
+                artist: "Alhanii",
+                src: "/music/Love Story - Instrumental Slowed - Alhanii.mp3"
+            }
+            // Add more tracks as needed:
+            // {
+            //     title: "Your Track Title",
+            //     artist: "Artist Name",
+            //     src: "music/your-track-filename.mp3" 
+            // }
+        ];
+        
+        // Player state
+        let currentTrackIndex = 0;
+        let isPlaying = false;
+        let visualizerActive = false;
+        let shuffleActive = false;
+        let animationFrame;
+        
+        // Audio Context for Visualization
+        let audioContext;
+        let analyser;
+        let source;
+        let dataArray;
+        let visualizerCanvas;
+        let visualizerCtx;
+        
+        // Initialize the music player
+        function initMusicPlayer() {
+            // Show the player with animation
+            setTimeout(() => {
+                musicPlayer.classList.add('show');
+            }, 2000);
+            
+            // Shuffle the playlist if enabled
+            if (shuffleActive) {
+                shufflePlaylist();
+            }
+            
+            // Load the first track
+            loadTrack(currentTrackIndex);
+            
+            // Set initial volume
+            backgroundMusic.volume = volumeSlider.value / 100;
+        }
+        
+        // Load a specific track
+        function loadTrack(trackIndex) {
+            if (trackIndex < 0) trackIndex = playlist.length - 1;
+            if (trackIndex >= playlist.length) trackIndex = 0;
+            
+            currentTrackIndex = trackIndex;
+            const currentTrack = playlist[currentTrackIndex];
+            
+            // Update audio source
+            audioSource.src = currentTrack.src;
+            backgroundMusic.load();
+            
+            // Update track info
+            musicTitle.textContent = currentTrack.title;
+            musicArtist.textContent = currentTrack.artist;
+            
+            // If was playing before, start playing the new track
+            if (isPlaying) {
+                backgroundMusic.play()
+                    .then(() => {
+                        showMusicNotification(`Now playing: ${currentTrack.title}`);
+                    })
+                    .catch(e => {
+                        console.error("Error playing audio", e);
+                        showMusicNotification('Error playing music');
+                    });
+            }
+            
+            // Reset progress bar
+            musicProgressBar.style.width = '0%';
+        }
+        
+        // Play the previous track
+        function playPreviousTrack() {
+            loadTrack(currentTrackIndex - 1);
+        }
+        
+        // Play the next track
+        function playNextTrack() {
+            loadTrack(currentTrackIndex + 1);
+        }
+        
+        // Shuffle the playlist
+        function shufflePlaylist() {
+            for (let i = playlist.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [playlist[i], playlist[j]] = [playlist[j], playlist[i]];
+            }
+            
+            // If we're shuffling while playing, reload the current track
+            if (isPlaying) {
+                currentTrackIndex = 0;
+                loadTrack(currentTrackIndex);
+            }
+            
+            showMusicNotification('Playlist shuffled');
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create floating icons and particles (existing code)
+            // ... existing code ...
+            
+            // Initialize the music player with a random track
+            currentTrackIndex = Math.floor(Math.random() * playlist.length);
+            initMusicPlayer();
+            
+            // Music Toggle
+            musicToggle.addEventListener('click', () => {
+                if (!audioContext) {
+                    // Initialize Audio Context for the first time
+                    try {
+                        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                        analyser = audioContext.createAnalyser();
+                        source = audioContext.createMediaElementSource(backgroundMusic);
+                        source.connect(analyser);
+                        analyser.connect(audioContext.destination);
+                        
+                        // Set up analyzer
+                        analyser.fftSize = 256;
+                        const bufferLength = analyser.frequencyBinCount;
+                        dataArray = new Uint8Array(bufferLength);
+                        
+                        // Set up visualizer canvas
+                        visualizerCanvas = document.getElementById('visualizer');
+                        visualizerCtx = visualizerCanvas.getContext('2d');
+                        
+                        // Set canvas size
+                        resizeCanvas();
+                        window.addEventListener('resize', resizeCanvas);
+                    } catch (e) {
+                        console.error("Web Audio API is not supported in this browser", e);
+                    }
+                }
+                
+                if (isPlaying) {
+                    backgroundMusic.pause();
+                    playIcon.className = 'fas fa-play';
+                    showMusicNotification('Music paused');
+                    stopOrbCreation();
+                } else {
+                    backgroundMusic.play().catch(e => {
+                        console.error("Error playing audio", e);
+                        showMusicNotification('Error playing music');
+                    });
+                    playIcon.className = 'fas fa-pause';
+                    showMusicNotification(`Now playing: ${playlist[currentTrackIndex].title}`);
+                    startOrbCreation();
+                }
+                
+                isPlaying = !isPlaying;
+            });
+            
+            // Previous Track button
+            prevTrack.addEventListener('click', () => {
+                playPreviousTrack();
+            });
+            
+            // Next Track button
+            nextTrack.addEventListener('click', () => {
+                playNextTrack();
+            });
+            
+            // Shuffle Toggle
+            shuffleToggle.addEventListener('click', () => {
+                shuffleActive = !shuffleActive;
+                
+                if (shuffleActive) {
+                    shuffleToggle.classList.add('active');
+                    shufflePlaylist();
+                } else {
+                    shuffleToggle.classList.remove('active');
+                    showMusicNotification('Shuffle disabled');
+                }
+            });
+            
+            // Auto play next track when current one ends
+            backgroundMusic.addEventListener('ended', () => {
+                playNextTrack();
+            });
+            
+            // Volume Control
+            volumeSlider.addEventListener('input', () => {
+                const volume = volumeSlider.value / 100;
+                backgroundMusic.volume = volume;
+            });
+            
+            // Visualizer Toggle
+            visualizerToggle.addEventListener('click', () => {
+                visualizerActive = !visualizerActive;
+                
+                if (visualizerActive) {
+                    visualizerContainer.classList.add('active');
+                    visualizerToggle.style.color = 'var(--secondary)';
+                    if (isPlaying && !animationFrame) {
+                        drawVisualizer();
+                    }
+                } else {
+                    visualizerContainer.classList.remove('active');
+                    visualizerToggle.style.color = 'var(--light)';
+                    if (animationFrame) {
+                        cancelAnimationFrame(animationFrame);
+                        animationFrame = null;
+                    }
+                }
+            });
+            
+            // Update progress bar
+            backgroundMusic.addEventListener('timeupdate', () => {
+                const percent = (backgroundMusic.currentTime / backgroundMusic.duration) * 100;
+                musicProgressBar.style.width = `${percent}%`;
+            });
+        });
+        
+        // ... existing functions and code ...
+
+        // ... existing code ...
+
+        // Function to resize canvas
+        function resizeCanvas() {
+            if (visualizerCanvas) {
+                visualizerCanvas.width = visualizerContainer.clientWidth;
+                visualizerCanvas.height = visualizerContainer.clientHeight;
+            }
+        }
+        
+        // Draw visualizer function
+        function drawVisualizer() {
+            if (!visualizerActive || !isPlaying) {
+                animationFrame = null;
+                return;
+            }
+            
+            animationFrame = requestAnimationFrame(drawVisualizer);
+            
+            analyser.getByteFrequencyData(dataArray);
+            
+            visualizerCtx.clearRect(0, 0, visualizerCanvas.width, visualizerCanvas.height);
+            
+            const barWidth = (visualizerCanvas.width / dataArray.length) * 2.5;
+            let barHeight;
+            let x = 0;
+            
+            for (let i = 0; i < dataArray.length; i++) {
+                barHeight = dataArray[i] / 2;
+                
+                // Create gradient color based on frequency
+                const gradient = visualizerCtx.createLinearGradient(0, 0, 0, visualizerCanvas.height);
+                gradient.addColorStop(0, `rgba(155, 109, 255, ${dataArray[i] / 255})`);
+                gradient.addColorStop(1, `rgba(255, 107, 151, ${dataArray[i] / 255 * 0.5})`);
+                
+                visualizerCtx.fillStyle = gradient;
+                
+                // Draw rounded bars
+                visualizerCtx.beginPath();
+                visualizerCtx.moveTo(x, visualizerCanvas.height - barHeight);
+                visualizerCtx.lineTo(x + barWidth, visualizerCanvas.height - barHeight);
+                visualizerCtx.lineTo(x + barWidth, visualizerCanvas.height);
+                visualizerCtx.lineTo(x, visualizerCanvas.height);
+                visualizerCtx.closePath();
+                visualizerCtx.fill();
+                
+                // Add glow effect
+                visualizerCtx.shadowColor = 'rgba(155, 109, 255, 0.8)';
+                visualizerCtx.shadowBlur = 15;
+                
+                x += barWidth + 1;
+            }
+        }
+        
+        // Show music notification
+        function showMusicNotification(message) {
+            musicNotification.textContent = message;
+            musicNotification.classList.add('show');
+            
+            setTimeout(() => {
+                musicNotification.classList.remove('show');
+            }, 2000);
+        }
+        
+        // Sound visualization orbs
+        function createSoundOrb() {
+            if (!isPlaying) return;
+            
+            // Get current audio frequency data if available
+            let intensity = 50;
+            if (analyser && dataArray) {
+                analyser.getByteFrequencyData(dataArray);
+                // Use average of frequency values for intensity
+                intensity = dataArray.reduce((acc, val) => acc + val, 0) / dataArray.length;
+            }
+            
+            const size = Math.max(20, Math.min(100, intensity * 1.5));
+            const orb = document.createElement('div');
+            orb.className = 'sound-orb';
+            
+            // Position randomly at bottom of screen
+            const xPos = Math.random() * window.innerWidth;
+            orb.style.left = `${xPos}px`;
+            orb.style.bottom = '0';
+            orb.style.width = `${size}px`;
+            orb.style.height = `${size}px`;
+            
+            // Set opacity based on intensity
+            const opacity = Math.min(0.8, intensity / 255);
+            orb.style.opacity = opacity;
+            
+            // Set animation duration based on intensity
+            const animDuration = Math.max(3, 10 - (intensity / 255) * 5);
+            orb.style.animationDuration = `${animDuration}s`;
+            
+            document.body.appendChild(orb);
+            
+            // Remove after animation completes
+            setTimeout(() => {
+                if (orb.parentNode) {
+                    orb.parentNode.removeChild(orb);
+                }
+            }, animDuration * 1000);
+        }
+        
+        // Create floating music notes
+        function createMusicFloater() {
+            if (!isPlaying) return;
+            
+            const floater = document.createElement('div');
+            floater.className = 'music-floater';
+            
+            // Random position on screen
+            const xPos = Math.random() * window.innerWidth;
+            const yPos = Math.random() * window.innerHeight;
+            floater.style.left = `${xPos}px`;
+            floater.style.top = `${yPos}px`;
+            
+            // Random size
+            const size = 20 + Math.random() * 30;
+            floater.style.width = `${size}px`;
+            floater.style.height = `${size}px`;
+            
+            document.body.appendChild(floater);
+            
+            // Remove after animation completes
+            setTimeout(() => {
+                if (floater.parentNode) {
+                    floater.parentNode.removeChild(floater);
+                }
+            }, 3000);
+        }
+        
+        let orbInterval;
+        let floaterInterval;
+        
+        function startOrbCreation() {
+            if (orbInterval) clearInterval(orbInterval);
+            if (floaterInterval) clearInterval(floaterInterval);
+            
+            // Create orbs regularly
+            orbInterval = setInterval(createSoundOrb, 1000);
+            
+            // Create music floaters periodically
+            floaterInterval = setInterval(createMusicFloater, 2000);
+            
+            // Start visualization if active
+            if (visualizerActive && !animationFrame) {
+                drawVisualizer();
+            }
+        }
+        
+        function stopOrbCreation() {
+            if (orbInterval) {
+                clearInterval(orbInterval);
+                orbInterval = null;
+            }
+            
+            if (floaterInterval) {
+                clearInterval(floaterInterval);
+                floaterInterval = null;
+            }
+            
+            // Stop visualization animation
+            if (animationFrame) {
+                cancelAnimationFrame(animationFrame);
+                animationFrame = null;
+            }
+        }
     </script>
 </body>
 </html>
