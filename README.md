@@ -4,7 +4,7 @@ A magical tool that transforms plain subscription data into beautifully formatte
 
 ## 🔮 Quick Links
 
-- [Launch the Formatter](./Magical-Subscription-Formatter.html) - Open the application directly from this repository
+- [Launch the Formatter](https://darkphoenixir.github.io/Fantasy-Subscription-Formatter/Magical-Subscription-Formatter.html) - Open the application directly from GitHub Pages
 - [View the Source Code](./Magical-Subscription-Formatter.html) - See the complete HTML, CSS, and JavaScript
 
    ![Fantasy Subscription Formatter](./images/screenshot.png)
