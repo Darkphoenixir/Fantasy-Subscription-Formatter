@@ -1303,10 +1303,18 @@
     <div class="particles" id="particles"></div>
     
     <!-- Audio Element (Hidden) -->
-    <audio id="background-music" loop>
-        <source src="" type="audio/mpeg" id="audio-source">
+    <audio id="background-music" preload="none">
+        <source src="https://assets.mixkit.co/music/preview/mixkit-dreaming-big-31.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
+    
+    <!-- Simple Music Controls -->
+    <div class="simple-player" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; background: rgba(26, 19, 37, 0.8); padding: 10px; border-radius: 10px; display: flex; align-items: center; gap: 10px;">
+        <button id="simple-play-btn" style="background: var(--secondary); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-play" id="simple-play-icon"></i>
+        </button>
+        <div style="color: white; font-size: 14px;">Play Music</div>
+    </div>
     
     <!-- Music Start Overlay -->
     <div class="music-start-overlay" id="music-start-overlay">
@@ -1510,28 +1518,74 @@
     <script>
         // Create floating icons and particles
         document.addEventListener('DOMContentLoaded', function() {
-            // Create floating icons
-            const floatingIcons = document.createElement('div');
-            floatingIcons.className = 'floating-icons';
-            document.body.appendChild(floatingIcons);
+            // Simple music player
+            const music = document.getElementById('background-music');
+            const playBtn = document.getElementById('simple-play-btn');
+            const playIcon = document.getElementById('simple-play-icon');
             
-            const icons = ['✨', '🔮', '🌟', '⭐', '💫', '✨', '🌙', '⚡', '💎'];
-            const numberOfIcons = 30;
+            // Set initial volume
+            music.volume = 0.7;
+            
+            // Simple play/pause functionality
+            playBtn.addEventListener('click', function() {
+                console.log("Play button clicked");
+                if (music.paused) {
+                    let playPromise = music.play();
+                    
+                    if (playPromise !== undefined) {
+                        playPromise.then(_ => {
+                            // Playback started
+                            playIcon.className = 'fas fa-pause';
+                            console.log("Music started playing");
+                        })
+                        .catch(error => {
+                            // Auto-play was prevented
+                            console.log("Playback prevented:", error);
+                            // Try again with user interaction
+                            playIcon.className = 'fas fa-play';
+                        });
+                    }
+                } else {
+                    music.pause();
+                    playIcon.className = 'fas fa-play';
+                    console.log("Music paused");
+                }
+            });
+            
+            // Create floating icons
+            const container = document.querySelector('.container');
+            const numberOfIcons = 15;
+            
+            // Magic icons to use
+            const icons = [
+                'fa-magic',
+                'fa-moon',
+                'fa-star',
+                'fa-gem',
+                'fa-hat-wizard',
+                'fa-scroll',
+                'fa-wand-sparkles'
+            ];
             
             for (let i = 0; i < numberOfIcons; i++) {
                 const icon = document.createElement('div');
                 icon.className = 'floating-icon';
-                icon.textContent = icons[Math.floor(Math.random() * icons.length)];
+                
+                const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+                icon.innerHTML = `<i class="fas ${randomIcon}"></i>`;
+                
+                // Random position, size, and animation
                 icon.style.left = `${Math.random() * 100}%`;
                 icon.style.top = `${Math.random() * 100}%`;
                 icon.style.animationDuration = `${15 + Math.random() * 30}s`;
                 icon.style.animationDelay = `${Math.random() * 5}s`;
-                floatingIcons.appendChild(icon);
+                
+                container.appendChild(icon);
             }
             
             // Create particles
             const particles = document.getElementById('particles');
-            const numberOfParticles = 50;
+            const numberOfParticles = 30;
             
             for (let i = 0; i < numberOfParticles; i++) {
                 const particle = document.createElement('div');
@@ -1542,33 +1596,47 @@
                 particle.style.width = `${Math.random() * 10 + 5}px`;
                 particle.style.height = particle.style.width;
                 particle.style.animationDuration = `${15 + Math.random() * 30}s`;
-                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
                 particles.appendChild(particle);
             }
             
-            // Settings toggle
-            document.getElementById('settings-toggle').addEventListener('click', function() {
-                const settingsPanel = document.getElementById('settings-panel');
-                if (settingsPanel.style.display === 'block') {
-                    settingsPanel.style.display = 'none';
-                } else {
-                    settingsPanel.style.display = 'block';
-                }
-            });
+            // Add click to Settings toggle
+            const settingsToggle = document.getElementById('settings-toggle');
+            const settingsPanel = document.getElementById('settings-panel');
+            
+            if (settingsToggle && settingsPanel) {
+                settingsToggle.addEventListener('click', function() {
+                    settingsPanel.classList.toggle('show');
+                });
+            }
             
             // Add pattern button
-            document.getElementById('add-pattern').addEventListener('click', function() {
-                const patternContainer = document.getElementById('pattern-container');
-                const patternField = document.createElement('div');
-                patternField.className = 'pattern-field';
-                patternField.innerHTML = `
-                    <input type="text" class="pattern-input" placeholder="Regular expression pattern">
-                    <button class="remove-pattern" onclick="this.parentNode.remove()">
-                        <i class="fas fa-times"></i>
-                    </button>
-                `;
-                patternContainer.appendChild(patternField);
-            });
+            const addPatternBtn = document.getElementById('add-pattern-btn');
+            if (addPatternBtn) {
+                addPatternBtn.addEventListener('click', function() {
+                    const patternsList = document.getElementById('patterns-list');
+                    const index = patternsList.children.length + 1;
+                    
+                    const patternItem = document.createElement('div');
+                    patternItem.className = 'pattern-item';
+                    patternItem.innerHTML = `
+                        <input type="text" placeholder="Enter regex pattern" class="pattern-input">
+                        <button class="remove-pattern"><i class="fas fa-times"></i></button>
+                    `;
+                    
+                    patternsList.appendChild(patternItem);
+                    
+                    // Add remove pattern functionality
+                    const removeBtn = patternItem.querySelector('.remove-pattern');
+                    removeBtn.addEventListener('click', function() {
+                        patternsList.removeChild(patternItem);
+                    });
+                });
+            }
+
+            // Initialize formatter
+            const formatter = new UltraFormatter();
+            window.formatter = formatter;
         });
         
         // UltraFormatter - Advanced version with TG ID pattern removal and more robust parsing
@@ -2530,45 +2598,6 @@
         const musicStartOverlay = document.getElementById('music-start-overlay');
         const immersiveVisualizer = document.getElementById('immersive-visualizer');
         const magicPath = document.getElementById('magic-path');
-        
-        // Playlist of music tracks
-        // To add your own tracks:
-        // 1. Place MP3 files in a folder called "music" in the same directory as your HTML file
-        // 2. Or use direct URLs to MP3 files hosted online
-        // 3. Update the playlist array below with your track information
-        const playlist = [
-            {
-                title: "Superman",
-                artist: "Alhanii",
-                src: "music/Superman - Instrumental Slowed - Alhanii.mp3"
-            },
-            {
-                title: "Медуза",
-                artist: "Six Dior",
-                src: "music/Медуза - Best Part - Six Dior.mp3"
-            },
-            {
-                title: "Street School",
-                artist: "Zag Beatmaker",
-                src: "music/Street School - Zag Beatmaker.mp3"
-            },
-            {
-                title: "Romantic Homicide",
-                artist: "Alhanii",
-                src: "music/Romantic Homicide - Instrumental - Alhanii.mp3"
-            },
-            {
-                title: "Love Story",
-                artist: "Alhanii",
-                src: "music/Love Story - Instrumental Slowed - Alhanii.mp3"
-            }
-            // Add more tracks as needed:
-            // {
-            //     title: "Your Track Title",
-            //     artist: "Artist Name",
-            //     src: "music/your-track-filename.mp3"  // Local file in the "music" folder
-            // }
-        ];
         
         // Player state
         let currentTrackIndex = 0;
