@@ -234,10 +234,10 @@
             padding: 1rem 1.5rem;
             border-radius: 10px;
             color: white;
-            z-index: 100;
-            transform: translateY(-100px);
+            z-index: 1000; /* Ensure notification is on top */
+            transform: translateY(-150px); /* Increased initial offset */
             opacity: 0;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.215, 0.610, 0.355, 1); /* Smoother transition */
         }
         
         .notification.show {
@@ -280,7 +280,6 @@
             font-size: 0.9rem;
         }
         
-        /* Particles */
         .particles {
             position: fixed;
             top: 0;
@@ -301,7 +300,6 @@
             animation: particleAnimation 15s infinite linear;
         }
         
-        /* Legend section */
         .legend {
             margin-top: 2rem;
             padding: 1.5rem;
@@ -328,9 +326,11 @@
             gap: 0.5rem;
         }
         
-        .legend-item i {
+        .legend-item i, .legend-item span.emoji-legend { /* For text emojis */
             color: var(--accent);
             font-size: 1.2rem;
+            min-width: 20px; /* Ensure alignment */
+            text-align: center;
         }
 
         .status-badge {
@@ -397,10 +397,14 @@
             margin-top: 0.5rem;
             opacity: 0;
             transition: opacity 0.3s ease;
+            height: 0; /* Collapse when not active */
+            overflow: hidden;
         }
         
         .processing-indicator.active {
             opacity: 1;
+            height: auto; /* Expand when active */
+             margin-top: 1rem; /* Add some margin when active */
         }
         
         .spinner {
@@ -412,7 +416,6 @@
             animation: spin 1s linear infinite;
         }
         
-        /* Pattern settings section */
         .pattern-settings {
             margin-top: 1rem;
             padding-top: 1rem;
@@ -435,6 +438,18 @@
             color: var(--light);
             font-family: 'Poppins', sans-serif;
         }
+         .pattern-field .remove-pattern { /* Style for the remove button */
+            background: transparent;
+            border: 1px solid var(--error);
+            color: var(--error);
+            padding: 0.4rem 0.6rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .pattern-field .remove-pattern:hover {
+            background: rgba(255, 92, 124, 0.2);
+        }
         
         .pattern-actions {
             display: flex;
@@ -448,7 +463,6 @@
             font-size: 0.9rem;
         }
         
-        /* Responsive */
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
@@ -467,7 +481,6 @@
             }
         }
         
-        /* Mystical Portal Styles */
         .mystical-portal-section {
             margin-top: 3rem;
             padding: 3rem 0;
@@ -594,243 +607,85 @@
             animation: runeGlow 3s infinite alternate;
         }
 
-        .rune:nth-child(2) {
-            animation-delay: 0.6s;
-        }
-
-        .rune:nth-child(3) {
-            animation-delay: 1.2s;
-        }
-
-        .rune:nth-child(4) {
-            animation-delay: 1.8s;
-        }
-
-        .rune:nth-child(5) {
-            animation-delay: 2.4s;
-        }
+        .rune:nth-child(2) { animation-delay: 0.6s; }
+        .rune:nth-child(3) { animation-delay: 1.2s; }
+        .rune:nth-child(4) { animation-delay: 1.8s; }
+        .rune:nth-child(5) { animation-delay: 2.4s; }
         
-        /* Animations */
         @keyframes titleGlow {
-            0% {
-                text-shadow: 0 0 10px rgba(155, 109, 255, 0.3);
-            }
-            100% {
-                text-shadow: 0 0 20px rgba(155, 109, 255, 0.6), 0 0 30px rgba(255, 107, 151, 0.4);
-            }
+            0% { text-shadow: 0 0 10px rgba(155, 109, 255, 0.3); }
+            100% { text-shadow: 0 0 20px rgba(155, 109, 255, 0.6), 0 0 30px rgba(255, 107, 151, 0.4); }
         }
-        
         @keyframes iconPulse {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 0.9;
-            }
-            50% {
-                transform: scale(1.1);
-                opacity: 1;
-            }
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.1); opacity: 1; }
         }
-        
         @keyframes buttonGlow {
-            0% {
-                transform: translateX(-100%);
-            }
-            100% {
-                transform: translateX(100%);
-            }
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
-        
         @keyframes floatAnimation {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.2;
-            }
-            90% {
-                opacity: 0.2;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.2; }
+            90% { opacity: 0.2; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
         }
-        
         @keyframes particleAnimation {
-            0% {
-                transform: translateY(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.6;
-            }
-            90% {
-                opacity: 0.6;
-            }
-            100% {
-                transform: translateY(-100vh);
-                opacity: 0;
-            }
+            0% { transform: translateY(0); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-100vh); opacity: 0; }
         }
-        
         @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
-        
         @keyframes runeGlow {
-            0% {
-                opacity: 0.4;
-                transform: scale(1);
-                text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1.2);
-                text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
-            }
+            0% { opacity: 0.4; transform: scale(1); text-shadow: 0 0 5px rgba(255, 255, 255, 0.3); }
+            100% { opacity: 1; transform: scale(1.2); text-shadow: 0 0 15px rgba(255, 255, 255, 0.7); }
         }
-
-        /* Portal animation effects */
         .portal-active .particles::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at center, rgba(155, 109, 255, 0.2) 0%, transparent 70%);
-            animation: pulseBackground 2s ease-out forwards;
-            z-index: 10;
-            pointer-events: none;
+            animation: pulseBackground 2s ease-out forwards; z-index: 10; pointer-events: none;
         }
-
-        @keyframes pulseBackground {
-            0% {
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-            }
-        }
-
+        @keyframes pulseBackground { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
         .magic-circle {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
+            width: 300px; height: 300px; border-radius: 50%;
             border: 2px solid rgba(155, 109, 255, 0.7);
-            box-shadow: 0 0 30px rgba(155, 109, 255, 0.5),
-                        inset 0 0 30px rgba(155, 109, 255, 0.5);
+            box-shadow: 0 0 30px rgba(155, 109, 255, 0.5), inset 0 0 30px rgba(155, 109, 255, 0.5);
             background: radial-gradient(circle at center, rgba(155, 109, 255, 0.2) 0%, transparent 70%);
-            z-index: 20;
-            opacity: 0;
-            pointer-events: none;
+            z-index: 20; opacity: 0; pointer-events: none;
         }
-
         .magic-circle::before {
-            content: "";
-            position: absolute;
-            top: -20px;
-            left: -20px;
-            right: -20px;
-            bottom: -20px;
-            border-radius: 50%;
-            border: 4px solid rgba(255, 255, 255, 0.1);
+            content: ""; position: absolute; top: -20px; left: -20px; right: -20px; bottom: -20px;
+            border-radius: 50%; border: 4px solid rgba(255, 255, 255, 0.1);
             animation: rotate 8s linear infinite;
         }
-
         .magic-circle::after {
-            content: "";
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 107, 151, 0.3);
+            content: ""; position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px;
+            border-radius: 50%; border: 2px solid rgba(255, 107, 151, 0.3);
             animation: rotate 5s linear infinite reverse;
         }
-
-        @keyframes rotate {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .portal-active .magic-circle {
-            animation: activatePortal 2s ease-out forwards;
-        }
-
+        @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .portal-active .magic-circle { animation: activatePortal 2s ease-out forwards; }
         @keyframes activatePortal {
-            0% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0) rotate(0deg);
-            }
-            50% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1) rotate(180deg);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(1.5) rotate(360deg);
-            }
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0) rotate(0deg); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(180deg); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5) rotate(360deg); }
         }
-
-        .portal-active .floating-icon {
-            animation: portalPull 1.5s ease-out forwards !important;
-        }
-
+        .portal-active .floating-icon { animation: portalPull 1.5s ease-out forwards !important; }
         @keyframes portalPull {
-            0% {
-                transform: scale(1);
-            }
-            100% {
-                transform: translateY(-50vh) translateX(calc(50vw - 100%)) scale(0);
-            }
+            0% { transform: scale(1); }
+            100% { transform: translateY(-50vh) translateX(calc(50vw - 100%)) scale(0); }
         }
-
         .portal-flash {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: white;
-            z-index: 30;
-            opacity: 0;
-            pointer-events: none;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 30; opacity: 0; pointer-events: none;
         }
-
-        .portal-active .portal-flash {
-            animation: portalFlash 0.5s ease-out 1.7s forwards;
-        }
-
-        @keyframes portalFlash {
-            0% {
-                opacity: 0;
-            }
-            50% {
-                opacity: 0.8;
-            }
-            100% {
-                opacity: 0;
-            }
-        }
+        .portal-active .portal-flash { animation: portalFlash 0.5s ease-out 1.7s forwards; }
+        @keyframes portalFlash { 0% { opacity: 0; } 50% { opacity: 0.8; } 100% { opacity: 0; } }
     </style>
 </head>
 <body>
@@ -838,17 +693,17 @@
     
     <div class="container">
         <header>
-            <h1>✨ Magical Subscription Formatter ✨</h1>
-            <p class="subtitle">Transform your plain subscription data into beautifully formatted content with magical emojis and enchanted styling</p>
+            <h1>✨ Arcane Subscription Formatter ✨</h1>
+            <p class="subtitle">Transform chaotic subscription data into beautifully formatted scrolls with enchanted styling and potent emojis!</p>
         </header>
         
         <div class="app-container">
             <div class="card input-card">
-                <h2 class="glow-icon"><i class="fas fa-magic"></i> Input Your Potion Ingredients</h2>
+                <h2 class="glow-icon"><i class="fas fa-magic"></i> Input Raw Glyphs</h2>
                 <div class="input-area">
-                    <textarea id="input-data" placeholder="Paste your subscription data here... (email:password | Plan = X Month | ExpireDate = YYYY-MM-DD | DaysLeft = X | AutoRenew = true/false | PaymentMethod = METHOD)"></textarea>
+                    <textarea id="input-data" placeholder="Paste your subscription data here... (e.g., email:password | Plan = X | ExpireDate = YYYY-MM-DD | ... )"></textarea>
                     <button id="settings-toggle" class="settings-toggle">
-                        <i class="fas fa-cog"></i> Advanced Settings
+                        <i class="fas fa-cog"></i> Advanced Glyphs Settings
                     </button>
                     <div id="settings-panel" class="settings-panel">
                         <div class="settings-options">
@@ -862,7 +717,7 @@
                             </div>
                             <div class="setting-item">
                                 <input type="checkbox" id="deep-inspection" checked>
-                                <label for="deep-inspection">Deep Inspection</label>
+                                <label for="deep-inspection">Deep Field Inspection</label>
                             </div>
                             <div class="setting-item">
                                 <input type="checkbox" id="error-recovery" checked>
@@ -870,17 +725,22 @@
                             </div>
                             <div class="setting-item">
                                 <input type="checkbox" id="remove-tags" checked>
-                                <label for="remove-tags">Remove Tag IDs</label>
+                                <label for="remove-tags">Remove Password Tags</label>
+                            </div>
+                             <div class="setting-item">
+                                <input type="checkbox" id="remove-line-artifacts" checked>
+                                <label for="remove-line-artifacts">Remove Line Artifacts (e.g., @User)</label>
                             </div>
                         </div>
                         
                         <div class="pattern-settings">
-                            <h4>Tag Removal Patterns</h4>
-                            <p>Add patterns to remove from passwords (e.g., TG tags)</p>
+                            <h4>Password Tag Removal Patterns</h4>
+                            <p>Add regex patterns to remove from passwords (e.g., TG tags)</p>
                             
                             <div id="pattern-container">
                                 <div class="pattern-field">
                                     <input type="text" class="pattern-input" value="- by@\w+" placeholder="Regular expression pattern">
+                                    <button class="remove-pattern"><i class="fas fa-times"></i></button>
                                 </div>
                             </div>
                             
@@ -892,75 +752,42 @@
                         </div>
                     </div>
                     <div class="button-container">
-                        <button id="format-btn"><i class="fas fa-wand-magic-sparkles"></i> Cast Formatting Spell</button>
-                        <button id="clear-btn" class="copy-btn"><i class="fas fa-broom"></i> Clear</button>
+                        <button id="format-btn"><i class="fas fa-wand-magic-sparkles"></i> Transmute Data</button>
+                        <button id="clear-btn" class="copy-btn"><i class="fas fa-broom"></i> Clear Cauldron</button>
                     </div>
                     <div id="processing-indicator" class="processing-indicator">
                         <div class="spinner"></div>
-                        <span>Casting powerful magic...</span>
+                        <span>Channeling arcane energies...</span>
                     </div>
                 </div>
             </div>
             
             <div class="card output-card">
-                <div class="status-badge" id="status-badge">Ready</div>
-                <h2 class="glow-icon"><i class="fas fa-scroll"></i> Your Enchanted Output</h2>
+                <div class="status-badge" id="status-badge">Awaiting Glyphs</div>
+                <h2 class="glow-icon"><i class="fas fa-scroll"></i> Your Enchanted Scroll</h2>
                 <div class="output-area">
-                    <pre id="output-result">Your magical formatted output will appear here...</pre>
+                    <pre id="output-result">Your magically formatted output will appear here...</pre>
                     <div class="button-container">
-                        <button id="copy-btn"><i class="fas fa-copy"></i> Copy to Spellbook</button>
+                        <button id="copy-btn"><i class="fas fa-copy"></i> Copy to Grimoire</button>
                     </div>
                 </div>
             </div>
             
             <div class="card legend">
-                <h3 class="glow-icon"><i class="fas fa-book-open"></i> Legend of Magical Symbols</h3>
-                <div class="legend-items">
-                    <div class="legend-item">
-                        <i class="fas fa-envelope"></i>
-                        <span>📧 Email</span>
-                    </div>
-                    <div class="legend-item">
-                        <i class="fas fa-key"></i>
-                        <span>Password in `monospace`</span>
-                    </div>
-                    <div class="legend-item">
-                        <i class="fas fa-calendar"></i>
-                        <span>🗓 Plan Duration</span>
-                    </div>
-                    <div class="legend-item">
-                        <i class="fas fa-hourglass-end"></i>
-                        <span>⏳ Expiration Date</span>
-                    </div>
-                    <div class="legend-item">
-                        <i class="fas fa-clock"></i>
-                        <span>⏳ Days Left</span>
-                    </div>
-                    <div class="legend-item">
-                        <i class="fas fa-sync-alt"></i>
-                        <span>✅/❌ Auto Renew</span>
-                    </div>
-                    <div class="legend-item">
-                        <i class="fas fa-credit-card"></i>
-                        <span>💳 Payment Method</span>
-                    </div>
+                <h3 class="glow-icon"><i class="fas fa-book-open"></i> Lexicon of Arcane Symbols</h3>
+                <div class="legend-items" id="legend-items-container">
+                    <!-- Legend items will be populated by JavaScript -->
                 </div>
             </div>
             
-            <!-- Mystical Portal Section -->
             <div class="mystical-portal-section">
                 <div class="portal-container">
                     <h3 class="portal-title">✧ Discover the Arcane Codex ✧</h3>
                     <p class="portal-description">Venture deeper into the magical realm where more enchanted creations await. The Fallen Angel's repository holds mysteries beyond imagination...</p>
-                    
                     <a href="https://github.com/Darkphoenixir" target="_blank" class="portal-button" id="portal-button">
                         <span class="portal-button-text">Open the Mystical Gateway</span>
                         <div class="portal-runes">
-                            <span class="rune">⚡</span>
-                            <span class="rune">✦</span>
-                            <span class="rune">✧</span>
-                            <span class="rune">⚝</span>
-                            <span class="rune">⚜</span>
+                            <span class="rune">⚡</span> <span class="rune">✦</span> <span class="rune">✧</span> <span class="rune">⚝</span> <span class="rune">⚜</span>
                         </div>
                     </a>
                 </div>
@@ -968,25 +795,22 @@
         </div>
         
         <footer>
-            <p>Created with ✨ magical code ✨ | Fantasy Subscription Formatter</p>
+            <p>Crafted with Love by ✨ Pilixy ✨ | Arcane Subscription Formatter</p>
         </footer>
     </div>
     
     <div class="notification" id="notification"></div>
-    
-    <!-- Add Magic Circle for Portal Effect -->
     <div class="magic-circle"></div>
     <div class="portal-flash"></div>
     
     <script>
         // Create floating icons and particles
         document.addEventListener('DOMContentLoaded', function() {
-            // Create floating icons
-            const floatingIcons = document.createElement('div');
-            floatingIcons.className = 'floating-icons';
-            document.body.appendChild(floatingIcons);
+            const floatingIconsContainer = document.createElement('div');
+            floatingIconsContainer.className = 'floating-icons';
+            document.body.insertBefore(floatingIconsContainer, document.body.firstChild); // Insert before container
             
-            const icons = ['✨', '🔮', '🌟', '⭐', '💫', '✨', '🌙', '⚡', '💎'];
+            const icons = ['✨', '🔮', '🌟', '⭐', '💫', '🌙', '⚡', '💎', '🗝️', '📜'];
             const numberOfIcons = 30;
             
             for (let i = 0; i < numberOfIcons; i++) {
@@ -994,13 +818,13 @@
                 icon.className = 'floating-icon';
                 icon.textContent = icons[Math.floor(Math.random() * icons.length)];
                 icon.style.left = `${Math.random() * 100}%`;
-                icon.style.top = `${Math.random() * 100}%`;
-                icon.style.animationDuration = `${15 + Math.random() * 30}s`;
-                icon.style.animationDelay = `${Math.random() * 5}s`;
-                floatingIcons.appendChild(icon);
+                icon.style.top = `${Math.random() * 100}%`; // Start from random positions
+                icon.style.fontSize = `${0.8 + Math.random() * 1}rem`;
+                icon.style.animationDuration = `${10 + Math.random() * 20}s`;
+                icon.style.animationDelay = `${Math.random() * 10}s`;
+                floatingIconsContainer.appendChild(icon);
             }
             
-            // Create particles
             const particles = document.getElementById('particles');
             const numberOfParticles = 50;
             
@@ -1010,39 +834,33 @@
                 particle.style.left = `${Math.random() * 100}%`;
                 particle.style.top = `${Math.random() * 100}%`;
                 particle.style.opacity = `${Math.random() * 0.5 + 0.1}`;
-                particle.style.width = `${Math.random() * 4 + 1}px`;
-                particle.style.height = particle.style.width;
-                particle.style.animationDuration = `${15 + Math.random() * 30}s`;
-                particle.style.animationDelay = `${Math.random() * 5}s`;
+                const size = `${Math.random() * 3 + 1}px`;
+                particle.style.width = size;
+                particle.style.height = size;
+                particle.style.animationDuration = `${12 + Math.random() * 18}s`;
+                particle.style.animationDelay = `${Math.random() * 8}s`;
                 particles.appendChild(particle);
             }
             
-            // Settings toggle
             document.getElementById('settings-toggle').addEventListener('click', function() {
                 const settingsPanel = document.getElementById('settings-panel');
-                if (settingsPanel.style.display === 'block') {
-                    settingsPanel.style.display = 'none';
-                } else {
-                    settingsPanel.style.display = 'block';
-                }
+                settingsPanel.style.display = settingsPanel.style.display === 'block' ? 'none' : 'block';
             });
             
-            // Add pattern button
             document.getElementById('add-pattern').addEventListener('click', function() {
                 const patternContainer = document.getElementById('pattern-container');
                 const patternField = document.createElement('div');
                 patternField.className = 'pattern-field';
                 patternField.innerHTML = `
                     <input type="text" class="pattern-input" placeholder="Regular expression pattern">
-                    <button class="remove-pattern" onclick="this.parentNode.remove()">
-                        <i class="fas fa-times"></i>
-                    </button>
+                    <button class="remove-pattern"><i class="fas fa-times"></i></button>
                 `;
                 patternContainer.appendChild(patternField);
             });
+             // Populate legend dynamically
+            populateLegend();
         });
         
-        // UltraFormatter - Advanced version with TG ID pattern removal and more robust parsing
         class UltraFormatter {
             constructor() {
                 this.options = {
@@ -1050,935 +868,470 @@
                     multiStrategy: true,
                     deepInspection: true,
                     errorRecovery: true,
-                    removeTags: true
+                    removeTags: true, // For password tags
+                    removeLineArtifacts: true // For line-level artifacts like @User
                 };
                 
-                // Default patterns to remove from passwords (like TG IDs)
-                this.removalPatterns = [
-                    /\s*-\s*by@[A-Za-z0-9_]+/g,  // - by@USERNAME pattern
-                    /\s*-\s*BY@[A-Za-z0-9_]+/g,   // - BY@USERNAME pattern (uppercase)
-                    /\s*-\s*By@[A-Za-z0-9_]+/g,   // - By@USERNAME pattern (mixed case) 
-                    /\s*-\s*by@L_E_O_U_S_E_S/g,   // Specific pattern from example
-                    /\s*-\s*by[A-Za-z0-9@_]+/g    // More general pattern for by tags
+                this.defaultPasswordRemovalPatterns = [
+                    /\s*-\s*by@[A-Za-z0-9_]+/g,
+                    /\s*-\s*BY@[A-Za-z0-9_]+/g,
+                    /\s*-\s*By@[A-Za-z0-9_]+/g,
+                    /\s*-\s*by@L_E_O_U_S_E_S/g, // Example
+                    /\s*-\s*by[A-Za-z0-9@_]+/g
                 ];
-                
-                // Known email and domain patterns for better detection
-                this.emailDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'icloud.com', 'aol.com', 'protonmail.com', 'lynsoluciones.es'];
-                
-                // Known payment methods
-                this.paymentMethods = {
-                    'CREDIT_CARD': '💳',
-                    'PAYPAL': '💵',
-                    'APP_STORE_AUTO_RENEWABLE': '🍎',
-                    'APP_STORE': '🍎',
-                    'GOOGLE_PLAY': '🤖',
-                    'PLAY_STORE': '🤖',
-                    'BITCOIN': '₿',
-                    'CRYPTO': '₿',
-                    'CB_CREDITCARD': '💳',
-                    'CB_PAYPAL': '💵'
-                };
-                
-                // Common field name variations for normalization
+                this.customPasswordRemovalPatterns = [];
+
                 this.fieldVariations = {
-                    'plan': ['plan', 'subscription', 'sub', 'package'],
-                    'expiredate': ['expiredate', 'expire date', 'expiration date', 'expiry', 'expires', 'exp date'],
-                    'daysleft': ['daysleft', 'days left', 'remaining days', 'days remaining'],
-                    'autorenew': ['autorenew', 'auto renew', 'auto renewal', 'renewal'],
-                    'paymentmethod': ['paymentmethod', 'payment method', 'payment', 'method', 'paid with']
+                    email: ['email', 'e-mail', 'user', 'username', 'login'],
+                    password: ['password', 'pass', 'pw', 'secret'],
+                    plan: ['plan', 'subscription', 'sub', 'package', 'productname', 'planname'],
+                    expireDate: ['expiredate', 'expire date', 'expiration date', 'expiry', 'expires', 'exp date', 'next renewal date', 'renewal date', 'valid until', 'subscription end date'],
+                    purchaseDate: ['purchase date', 'bought on', 'order date', 'start date', 'subscription start date'],
+                    daysLeft: ['daysleft', 'days left', 'remaining days', 'days remaining'],
+                    autoRenew: ['autorenew', 'auto renew', 'auto renewal', 'renewal', 'recurring', 'subscriber'],
+                    paymentMethod: ['paymentmethod', 'payment method', 'payment', 'method', 'paid with', 'type card', 'card type'],
+                    country: ['country', 'region', 'location'],
+                    emailVerified: ['emailverified', 'verified', 'email confirmed', 'isverified'],
+                    provider: ['provider', 'service', 'platform'],
+                    isFreeTrial: ['isfreetrial', 'free trial', 'trial period'],
+                    securityFlagged: ['securityflagged', 'flagged', 'security status'],
+                    voucherCode: ['vouchercode', 'voucher', 'promo code', 'discount code'],
+                    birthDate: ['birth date', 'dob', 'birthday'],
+                    cardName: ['name cc', 'cardholder name', 'card name', 'cc name'],
+                    cardExpiryMonth: ['expiry month', 'exp month', 'card exp month', 'cc exp month'],
+                    cardExpiryYear: ['expiry year', 'exp year', 'card exp year', 'cc exp year'],
+                    cardLastFour: ['last four', 'card last4', 'last4', 'cc last four'],
+                    postalCode: ['postal code', 'zip code', 'billing zip', 'zip'],
+                    bankName: ['bank name', 'issuing bank', 'card issuer'],
+                    ipAddress: ['ip address', 'ip', 'last ip'],
+                    status: ['status', 'account status'],
+                    notes: ['notes', 'note', 'comment', 'description'],
+                    vpnServer: ['vpn server', 'server location', 'connected server'],
+                    vpnProtocol: ['vpn protocol', 'protocol'],
+                };
+
+                this.fieldOrder = [
+                    'email', 'password', 'plan', 'status', 'expireDate', 'purchaseDate', 'daysLeft', 'autoRenew', 
+                    'country', 'provider', 'paymentMethod', 'cardName', 'cardLastFour', 
+                    'cardExpiryMonth', 'cardExpiryYear', 'postalCode', 'bankName',
+                    'emailVerified', 'isFreeTrial', 'voucherCode', 'birthDate', 
+                    'ipAddress', 'vpnServer', 'vpnProtocol', 'securityFlagged', 'notes'
+                ];
+
+                this.fieldEmojis = {
+                    email: '📧', password: '🔑', plan: '📜', expireDate: '⏳', daysLeft: '⏱️',
+                    autoRenew: '🔄', paymentMethod: '💳', country: '🌍', emailVerified: '📬',
+                    provider: '⚙️', purchaseDate: '🛍️', isFreeTrial: '🎁', securityFlagged: '🚩',
+                    voucherCode: '🎟️', birthDate: '🎂', cardName: '🧑', cardExpiryMonth: '🈷️',
+                    cardExpiryYear: '📅', cardLastFour: '🔢', postalCode: '📮', bankName: '🏦',
+                    ipAddress: '🌐', status: '📊', notes: '📝',
+                    vpnServer: '🛡️', vpnProtocol: '📡',
+                    default: '🔹'
                 };
             }
             
-            // Update formatting options
             setOptions(options) {
                 this.options = { ...this.options, ...options };
             }
             
-            // Set removal patterns
             setRemovalPatterns(patterns) {
-                if (patterns && patterns.length > 0) {
-                    // Convert string patterns to RegExp objects
-                    this.removalPatterns = patterns.map(pattern => {
-                        if (typeof pattern === 'string' && pattern.trim()) {
-                            try {
-                                return new RegExp(pattern, 'g');
-                            } catch (error) {
-                                console.error('Invalid regex pattern:', pattern, error);
-                                // Add a notification for invalid patterns
-                                if (typeof showNotification === 'function') {
-                                    showNotification(`Invalid pattern: ${pattern}`, 'error');
-                                }
-                                return null;
+                this.customPasswordRemovalPatterns = patterns
+                    .map(patternStr => {
+                        if (typeof patternStr === 'string' && patternStr.trim()) {
+                            try { return new RegExp(patternStr, 'g'); }
+                            catch (e) { console.error("Invalid regex pattern:", patternStr, e); return null; }
+                        }
+                        return null;
+                    })
+                    .filter(p => p !== null);
+            }
+
+            preProcessLine(line) {
+                let processed = line;
+                if (this.options.removeLineArtifacts) {
+                    // Remove patterns like | @Ironbull or just @Ironbull if it's not part of a value
+                    // This regex tries to avoid removing @ in email addresses or legitimate values
+                    processed = processed.replace(/(?<![a-zA-Z0-9._-])@\w+(\s*\||$)/g, '$1'); // Matches @Username at end or before |
+                    processed = processed.replace(/\s*\|\s*@\w+/g, ''); // Matches | @Username
+                    processed = processed.replace(/(?<![a-zA-Z0-9])@\w+\b(?!\.[a-zA-Z])/g, ''); // More general @tag removal
+                }
+                // Normalize separators
+                processed = processed.replace(/\s*\|\s*/g, ' | ');
+                // Trim trailing/leading pipes that might result from removals
+                processed = processed.replace(/^\|\s*/, '').replace(/\s*\|$/, '');
+                return processed.trim();
+            }
+
+            cleanPassword(password) {
+                if (!password) return '';
+                let cleaned = password.trim();
+                
+                const allPatterns = [...this.defaultPasswordRemovalPatterns, ...this.customPasswordRemovalPatterns];
+
+                if (this.options.removeTags && allPatterns.length > 0) {
+                    for (const pattern of allPatterns) {
+                        try { cleaned = cleaned.replace(pattern, ''); }
+                        catch (error) { console.warn('Error applying password pattern:', pattern, error); }
+                    }
+                }
+                return cleaned.trim();
+            }
+
+            normalizeFieldName(rawKey) {
+                const keyLowerSpaceless = rawKey.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9]/gi, '');
+                for (const [normalized, variations] of Object.entries(this.fieldVariations)) {
+                    if (variations.some(v => v.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9]/gi, '') === keyLowerSpaceless)) {
+                        return normalized;
+                    }
+                }
+                // Fallback: camelCase the raw key if no specific normalization found
+                return rawKey.trim().toLowerCase()
+                    .replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase())
+                    .replace(/[^a-zA-Z0-9]/gi, ''); // Remove any remaining non-alphanumeric
+            }
+
+            extractFields(account, dataString) {
+                if (!dataString) return;
+
+                const parts = dataString.split('|');
+                for (const part of parts) {
+                    const [rawKey, ...valueParts] = part.split('=');
+                    if (rawKey && valueParts.length > 0) {
+                        const key = rawKey.trim();
+                        let value = valueParts.join('=').trim();
+
+                        if (value.startsWith('[') && value.endsWith(']')) {
+                            value = value.substring(1, value.length - 1).trim();
+                        }
+
+                        const lowerValue = value.toLowerCase();
+                        if (lowerValue === 'true') value = true;
+                        else if (lowerValue === 'false') value = false;
+
+                        const normalizedKey = this.normalizeFieldName(key);
+                        
+                        // Avoid overwriting already parsed critical fields like email/password
+                        // unless the new value is more specific or valid
+                        if (normalizedKey && !['email', 'password'].includes(normalizedKey)) {
+                           account[normalizedKey] = value;
+                           if (normalizedKey === 'autoRenew' || (normalizedKey === 'status' && value === true) ) { // Consider 'subscriber' mapping to 'autoRenew'
+                                account.autoRenewExplicit = true;
                             }
                         }
-                        return pattern;
-                    }).filter(pattern => pattern !== null);
+                    }
                 }
             }
             
-            // Main formatting function
+            async parseLineByLine(input) {
+                const accounts = [];
+                const lines = input.split('\n').filter(line => line.trim());
+
+                for (let rawLine of lines) {
+                    let line = this.preProcessLine(rawLine);
+                    
+                    // Regex: email : password (non-greedy) | optional_other_data
+                    const accountMatch = line.match(/^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\s*:\s*([^|]+?)(?:\s*\|(.*))?$/);
+
+                    if (accountMatch) {
+                        const email = accountMatch[1].trim();
+                        let password = accountMatch[2].trim();
+                        const remainingData = accountMatch[3] ? accountMatch[3].trim() : '';
+
+                        password = this.cleanPassword(password);
+                        const account = { email, password };
+                        this.extractFields(account, remainingData);
+                        
+                        // Normalize after all fields are extracted from line
+                        this.normalizeAccount(account); 
+                        accounts.push(account);
+
+                    } else if (this.options.errorRecovery || this.options.aggressiveParsing) {
+                        // Fallback for lines not matching the primary pattern
+                        const emailOnlyMatch = line.match(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/);
+                        if (emailOnlyMatch) {
+                            const account = { email: emailOnlyMatch[1].trim(), password: '[Password Not Parsed]' };
+                            // Try to extract fields from the whole line if email is found
+                            this.extractFields(account, line.replace(emailOnlyMatch[0], '').replace(/^[:\s|]+/, ''));
+                            this.normalizeAccount(account);
+                            accounts.push(account);
+                        }
+                    }
+                }
+                return accounts;
+            }
+
+            normalizeAccount(account) {
+                // Ensure autoRenew is boolean, and autoRenewExplicit is set
+                if (account.autoRenew !== undefined) {
+                    account.autoRenewExplicit = true;
+                    if (typeof account.autoRenew === 'string') {
+                        account.autoRenew = account.autoRenew.toLowerCase() === 'true';
+                    }
+                } else {
+                     // If 'subscriber' was true and mapped to autoRenew, this is handled.
+                     // Otherwise, default autoRenew if not present.
+                    if (account.autoRenewExplicit === undefined) { // only if not set by previous logic
+                        account.autoRenew = false; 
+                        account.autoRenewExplicit = false;
+                    }
+                }
+                // Add other normalization if needed (e.g., date formats)
+            }
+            
             async format(inputText) {
                 if (!inputText || !inputText.trim()) {
-                    return { success: false, message: 'No input provided', result: null };
+                    return { success: false, message: 'Input is empty, my liege.', result: null, accounts: [] };
                 }
                 
                 try {
-                    // Apply corrections to fix known issues in the input
-                    let processedInput = this.preProcessInput(inputText);
-                    
-                    // Try multiple strategies to parse accounts
-                    const strategies = [
-                        this.extractAccountsByPattern.bind(this),
-                        this.extractAccountsByLines.bind(this),
-                        this.extractAccountsByDelimiters.bind(this),
-                        this.extractAccountsByEmailPasswordPattern.bind(this)
-                    ];
-                    
-                    // Use all strategies and pick the best result
-                    let bestResult = { accounts: [], quality: 0 };
-                    
-                    // If multi-strategy is enabled, try all strategies
-                    if (this.options.multiStrategy) {
-                        for (const strategy of strategies) {
-                            const result = await strategy(processedInput);
-                            
-                            // Evaluate the quality of the result
-                            const quality = this.evaluateResultQuality(result, processedInput);
-                            
-                            // Keep the best result
-                            if (quality > bestResult.quality) {
-                                bestResult = { accounts: result, quality };
-                            }
-                        }
-                    } else {
-                        // Just use the first strategy if multi-strategy is disabled
-                        bestResult.accounts = await strategies[0](processedInput);
+                    let parsedAccounts = await this.parseLineByLine(inputText);
+
+                    // If multiStrategy is on, you could try other strategies here if parseLineByLine yields few results
+                    // For now, parseLineByLine is the main one for this data type.
+
+                    if (parsedAccounts.length === 0 && this.options.aggressiveParsing) {
+                        // A more aggressive pass if needed (could adapt existing strategies)
+                        console.log("Initial parsing yielded no accounts, trying aggressive if implemented.");
                     }
                     
-                    // If we have no accounts after trying all strategies
-                    if (bestResult.accounts.length === 0) {
-                        // Try one more time with a more aggressive approach
-                        if (this.options.aggressiveParsing) {
-                            bestResult.accounts = await this.aggressiveExtraction(processedInput);
+                    // Post-processing to remove duplicates (by email)
+                    const uniqueAccounts = [];
+                    const seenEmails = new Set();
+                    for (const acc of parsedAccounts) {
+                        if (acc.email && !seenEmails.has(acc.email.toLowerCase())) {
+                            seenEmails.add(acc.email.toLowerCase());
+                            uniqueAccounts.push(acc);
+                        } else if (!acc.email && this.options.errorRecovery) { // Keep accounts even if email parsing failed in recovery
+                            uniqueAccounts.push(acc);
                         }
                     }
-                    
-                    // Post-process accounts to ensure consistency and fix any issues
-                    const processedAccounts = this.postProcessAccounts(bestResult.accounts);
-                    
-                    // Format the output
-                    const formattedOutput = this.formatOutput(processedAccounts);
-                    
+
+                    const formattedOutput = this.formatOutput(uniqueAccounts);
                     return {
                         success: true,
                         result: formattedOutput,
-                        accounts: processedAccounts,
-                        message: `Successfully formatted ${processedAccounts.length} account(s)`
+                        accounts: uniqueAccounts,
+                        message: `Successfully transmuted ${uniqueAccounts.length} scroll(s).`
                     };
+
                 } catch (error) {
-                    console.error('Error in formatter:', error);
-                    
-                    // Try error recovery if enabled
-                    if (this.options.errorRecovery) {
-                        try {
-                            const recoveredAccounts = this.emergencyRecovery(inputText);
-                            if (recoveredAccounts.length > 0) {
-                                const formattedOutput = this.formatOutput(recoveredAccounts);
-                                return {
-                                    success: true,
-                                    result: formattedOutput,
-                                    accounts: recoveredAccounts,
-                                    message: `Recovered ${recoveredAccounts.length} account(s) after error`
-                                };
-                            }
-                        } catch (recoveryError) {
-                            console.error('Recovery failed:', recoveryError);
-                        }
-                    }
-                    
-                    return {
-                        success: false,
-                        message: `Error: ${error.message}`,
-                        result: null
-                    };
+                    console.error('Error during arcane transmutation:', error);
+                    return { success: false, message: `A magical mishap occurred: ${error.message}`, result: null, accounts: [] };
                 }
             }
-            
-            // Pre-process the input to fix known issues
-            preProcessInput(input) {
-                let processed = input;
-                
-                // Fix known issues with specific patterns
-                processed = processed.replace(/\s*\|\s*/g, ' | '); // Normalize separators
-                
-                // Ensure payment methods are properly separated
-                const paymentMethodsKeys = Object.keys(this.paymentMethods).join('|');
-                const paymentMethodRegex = new RegExp(`(PaymentMethod\\s*=\\s*(${paymentMethodsKeys}))([a-zA-Z0-9._-]+@)`, 'g');
-                processed = processed.replace(paymentMethodRegex, '$1 | $3');
-                
-                return processed;
-            }
-            
-            // Clean up passwords by removing TG IDs and other unwanted patterns
-            cleanPassword(password) {
-                if (!password) return password;
-                let cleaned = password.trim();
-                
-                // Apply removal patterns if enabled
-                if (this.options.removeTags && this.removalPatterns.length > 0) {
-                    // First, check for and handle the specific "by@L_E_O_U_S_E_S" pattern
-                    if (cleaned.includes("by@L_E_O_U_S_E_S") || 
-                        cleaned.includes("by@l_e_o_u_s_e_s") ||
-                        cleaned.includes("BY@L_E_O_U_S_E_S")) {
-                        
-                        // Find the position of the tag
-                        const tagPos = Math.max(
-                            cleaned.indexOf("by@L_E_O_U_S_E_S"),
-                            cleaned.indexOf("by@l_e_o_u_s_e_s"),
-                            cleaned.indexOf("BY@L_E_O_U_S_E_S")
-                        );
-                        
-                        if (tagPos > 0) {
-                            // Truncate at the position of the tag
-                            cleaned = cleaned.substring(0, tagPos).trim();
-                        }
-                    }
-                    
-                    // Then apply all other regex patterns
-                    for (const pattern of this.removalPatterns) {
-                        try {
-                            cleaned = cleaned.replace(pattern, '');
-                        } catch (error) {
-                            console.warn('Error applying pattern:', pattern, error);
-                            // Continue with other patterns
-                        }
-                    }
-                }
-                
-                // Trim any remaining whitespace
-                cleaned = cleaned.trim();
-                
-                return cleaned;
-            }
-            
-            // Strategy 1: Extract accounts by email:password pattern
-            async extractAccountsByPattern(input) {
-                const accounts = [];
-                
-                // Match all email:password patterns
-                const emailPasswordRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)\s*:\s*([^|\n]+)/g;
-                const matches = [...input.matchAll(emailPasswordRegex)];
-                
-                if (matches.length === 0) return accounts;
-                
-                for (let i = 0; i < matches.length; i++) {
-                    const match = matches[i];
-                    const email = match[1].trim();
-                    let password = match[2].trim();
-                    
-                    // Clean the password by removing TG IDs, etc.
-                    password = this.cleanPassword(password);
-                    
-                    // Find the start and end of this account's data
-                    const startPos = match.index;
-                    let endPos;
-                    
-                    if (i < matches.length - 1) {
-                        // Find the next email pattern
-                        endPos = matches[i + 1].index;
-                    } else {
-                        // This is the last account
-                        endPos = input.length;
-                    }
-                    
-                    // Extract the full account data
-                    const accountData = input.substring(startPos, endPos);
-                    
-                    // Create an account object with the email and password
-                    const account = { email, password };
-                    
-                    // Extract other fields from the account data
-                    this.extractFields(account, accountData);
-                    
-                    accounts.push(account);
-                }
-                
-                return accounts;
-            }
-            
-            // Strategy 2: Extract accounts by lines
-            async extractAccountsByLines(input) {
-                const accounts = [];
-                
-                // Split the input by newlines and process each line
-                const lines = input.split('\n').filter(line => line.trim());
-                
-                for (const line of lines) {
-                    // Check if the line contains an email:password pattern
-                    const emailPasswordMatch = line.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)\s*:\s*([^|\n]+)/);
-                    if (!emailPasswordMatch) continue;
-                    
-                    const email = emailPasswordMatch[1].trim();
-                    let password = emailPasswordMatch[2].trim();
-                    
-                    // Clean the password by removing TG IDs, etc.
-                    password = this.cleanPassword(password);
-                    
-                    // Create an account object with the email and password
-                    const account = { email, password };
-                    
-                    // Extract other fields from the line
-                    this.extractFields(account, line);
-                    
-                    accounts.push(account);
-                }
-                
-                return accounts;
-            }
-            
-            // Strategy 3: Extract accounts by delimiters (special separators)
-            async extractAccountsByDelimiters(input) {
-                const accounts = [];
-                
-                // Try to find logical separators between accounts
-                let sections = [input];
-                
-                // Look for common account separators
-                const separators = [
-                    /(?:\r?\n){2,}/,  // Multiple newlines
-                    /---+/,           // Dashes
-                    /===+/,           // Equal signs
-                    /\*\*\*+/,        // Asterisks
-                    /_{3,}/           // Underscores
-                ];
-                
-                for (const separator of separators) {
-                    // If we already found good sections, stop
-                    if (sections.length > 1) break;
-                    
-                    // Try this separator
-                    const split = input.split(separator).filter(s => s.trim());
-                    
-                    // Check if this separator gives us multiple sections with email:password patterns
-                    let validSections = 0;
-                    for (const section of split) {
-                        if (section.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)\s*:\s*([^|\n]+)/)) {
-                            validSections++;
-                        }
-                    }
-                    
-                    // If most sections contain email:password, this is likely a good separator
-                    if (validSections > 0 && validSections / split.length > 0.5) {
-                        sections = split;
-                    }
-                }
-                
-                // Process each section as a potential account
-                for (const section of sections) {
-                    // Check if the section contains an email:password pattern
-                    const emailPasswordMatch = section.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)\s*:\s*([^|\n]+)/);
-                    if (!emailPasswordMatch) continue;
-                    
-                    const email = emailPasswordMatch[1].trim();
-                    let password = emailPasswordMatch[2].trim();
-                    
-                    // Clean the password by removing TG IDs, etc.
-                    password = this.cleanPassword(password);
-                    
-                    // Create an account object with the email and password
-                    const account = { email, password };
-                    
-                    // Extract other fields from the section
-                    this.extractFields(account, section);
-                    
-                    accounts.push(account);
-                }
-                
-                return accounts;
-            }
-            
-            // Strategy 4: Extract accounts by email-password without colon
-            async extractAccountsByEmailPasswordPattern(input) {
-                const accounts = [];
-                
-                // More flexible pattern to find email and password combinations
-                const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/g;
-                const matches = [...input.matchAll(emailRegex)];
-                
-                if (matches.length === 0) return accounts;
-                
-                for (let i = 0; i < matches.length; i++) {
-                    const match = matches[i];
-                    const email = match[1].trim();
-                    
-                    // Find the start and end of this account's data
-                    const startPos = match.index;
-                    let endPos;
-                    
-                    if (i < matches.length - 1) {
-                        // Find the next email pattern
-                        endPos = matches[i + 1].index;
-                    } else {
-                        // This is the last account
-                        endPos = input.length;
-                    }
-                    
-                    // Extract the account data
-                    let accountData = input.substring(startPos, endPos);
-                    
-                    // Try to find the password
-                    // First, look for a colon pattern
-                    let passwordMatch = accountData.match(/:\s*([^|\n]+)/);
-                    
-                    // If no colon, look for common separators
-                    if (!passwordMatch) {
-                        passwordMatch = accountData.match(/[|,;\s]\s*([a-zA-Z0-9._!@#$%^&*()-+=]{6,})/);
-                    }
-                    
-                    // Skip if we can't find a password
-                    if (!passwordMatch) continue;
-                    
-                    let password = passwordMatch[1].trim();
-                    
-                    // Clean the password by removing TG IDs, etc.
-                    password = this.cleanPassword(password);
-                    
-                    // Create an account object with the email and password
-                    const account = { email, password };
-                    
-                    // Extract other fields from the account data
-                    this.extractFields(account, accountData);
-                    
-                    accounts.push(account);
-                }
-                
-                return accounts;
-            }
-            
-            // Aggressive extraction when other methods fail
-            async aggressiveExtraction(input) {
-                const accounts = [];
-                
-                // Define a pattern that's very flexible but might have false positives
-                const bareEmailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/g;
-                const emails = [...input.matchAll(bareEmailRegex)].map(m => m[1]);
-                
-                // If no emails found, give up
-                if (emails.length === 0) return accounts;
-                
-                // For each email, try to find a nearby password
-                for (const email of emails) {
-                    // Find the position of this email in the input
-                    const emailPos = input.indexOf(email);
-                    
-                    // Look for a password pattern in the next 200 characters
-                    const context = input.substring(emailPos, emailPos + 200);
-                    
-                    // Various password patterns to try
-                    const passwordPatterns = [
-                        /:\s*([^|\n]{4,30})/,                      // Colon followed by non-separator chars
-                        /[|,;\s]\s*([A-Za-z0-9._!@#$%^&*()-+=]{6,})/,  // Common separators followed by password-like string
-                        /\s+([A-Za-z0-9._!@#$%^&*]{8,30})/         // Spaces followed by complex string
-                    ];
-                    
-                    let password = null;
-                    
-                    // Try each pattern
-                    for (const pattern of passwordPatterns) {
-                        const match = context.match(pattern);
-                        if (match) {
-                            password = match[1].trim();
-                            
-                            // Clean the password by removing TG IDs, etc.
-                            password = this.cleanPassword(password);
-                            break;
-                        }
-                    }
-                    
-                    // If no password found, generate a placeholder
-                    if (!password) {
-                        if (!this.options.aggressiveParsing) continue;
-                        password = '[PASSWORD_NOT_FOUND]';
-                    }
-                    
-                    // Create an account object with the email and password
-                    const account = { email, password };
-                    
-                    // Extract other fields from the nearby context
-                    // Look in a larger window for additional fields
-                    const largerContext = input.substring(
-                        Math.max(0, emailPos - 100),
-                        Math.min(input.length, emailPos + 300)
-                    );
-                    
-                    this.extractFields(account, largerContext);
-                    
-                    accounts.push(account);
-                }
-                
-                return accounts;
-            }
-            
-            // Extract fields from account data
-            extractFields(account, data) {
-                // Extract plan
-                this.extractField(account, data, 'plan', this.fieldVariations.plan);
-                
-                // Extract expiration date
-                this.extractField(account, data, 'expireDate', this.fieldVariations.expiredate);
-                
-                // Extract days left
-                this.extractField(account, data, 'daysLeft', this.fieldVariations.daysleft);
-                
-                // Extract auto renew
-                this.extractField(account, data, 'autoRenew', this.fieldVariations.autorenew, (value) => {
-                    return value.toLowerCase() === 'true';
-                });
-                
-                // Extract payment method
-                this.extractField(account, data, 'paymentMethod', this.fieldVariations.paymentmethod);
-                
-                // Deep inspection for fields that might be in non-standard formats
-                if (this.options.deepInspection) {
-                    this.deepFieldInspection(account, data);
-                }
-                
-                return account;
-            }
-            
-            // Extract a specific field using multiple variations of the field name
-            extractField(account, data, fieldName, variations, valueProcessor = null) {
-                // Check if the field is already set
-                if (account[fieldName] !== undefined) return;
-                
-                // Create a regex pattern for all variations of the field name
-                const variationsPattern = variations.join('|');
-                const regex = new RegExp(`(${variationsPattern})\\s*=\\s*([^|\\n]+)`, 'i');
-                
-                const match = data.match(regex);
-                if (match) {
-                    let value = match[2].trim();
-                    
-                    // Clean up the value (remove trailing junk)
-                    value = value.replace(/}}"\s*$/, '').trim();
-                    
-                    // Apply custom processing if provided
-                    if (valueProcessor && typeof valueProcessor === 'function') {
-                        value = valueProcessor(value);
-                    }
-                    
-                    account[fieldName] = value;
-                    
-                    // Track when autoRenew is explicitly provided in the input
-                    if (fieldName === 'autoRenew') {
-                        account.autoRenewExplicit = true;
-                    }
-                }
-            }
-            
-            // Deep inspection for non-standard field formats
-            deepFieldInspection(account, data) {
-                // ... existing code ...
-                
-                // Look for auto renew in looser patterns
-                if (account.autoRenew === undefined) {
-                    if (data.match(/\b(?:auto\s*renewal|recurring)\s*[:=]?\s*true\b/i)) {
-                        account.autoRenew = true;
-                        account.autoRenewExplicit = true;  // Add this line
-                    } else if (data.match(/\b(?:auto\s*renewal|recurring)\s*[:=]?\s*false\b/i)) {
-                        account.autoRenew = false;
-                        account.autoRenewExplicit = true;  // Add this line
-                    }
-                }
-                
-                // Look for plan duration pattern (X Month/Year)
-                if (!account.plan) {
-                    const planMatch = data.match(/\b(\d+\s*(?:Month|Year|Day|Week)s?)\b/i);
-                    if (planMatch) {
-                        account.plan = planMatch[1];
-                    }
-                }
-                
-                // Look for days left pattern (just a number near "day" word)
-                if (!account.daysLeft) {
-                    const daysMatch = data.match(/\b(\d+)\s*(?:day|days|d)\b/i);
-                    if (daysMatch) {
-                        account.daysLeft = daysMatch[1];
-                    }
-                }
-                
-                // Look for auto renew in looser patterns
-                if (account.autoRenew === undefined) {
-                    if (data.match(/\b(?:auto\s*renewal|recurring)\s*[:=]?\s*true\b/i)) {
-                        account.autoRenew = true;
-                    } else if (data.match(/\b(?:auto\s*renewal|recurring)\s*[:=]?\s*false\b/i)) {
-                        account.autoRenew = false;
-                    }
-                }
-                
-                // Look for payment methods in a more flexible way
-                if (!account.paymentMethod) {
-                    // Check for known payment method names in the data
-                    for (const method of Object.keys(this.paymentMethods)) {
-                        if (data.includes(method)) {
-                            account.paymentMethod = method;
-                            break;
-                        }
-                    }
-                }
-            }
-            
-            // Emergency recovery when normal parsing fails
-            emergencyRecovery(input) {
-                const accounts = [];
-                
-                // Just look for email patterns at this point
-                const emailPattern = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/g;
-                const emails = [...input.matchAll(emailPattern)].map(m => m[1]);
-                
-                if (emails.length === 0) return accounts;
-                
-                // For each email, create a minimal account
-                for (const email of emails) {
-                    const account = {
-                        email: email,
-                        password: '[RECOVERY_MODE]'
-                    };
-                    
-                    accounts.push(account);
-                }
-                
-                return accounts;
-            }
-            
-            // Post-process accounts to ensure consistency and fix issues
-            postProcessAccounts(accounts) {
-                const processed = [];
-                
-                // Remove duplicate accounts
-                const uniqueEmails = new Set();
-                
-                for (const account of accounts) {
-                    // Skip if we've already processed this email
-                    const emailKey = account.email.toLowerCase();
-                    if (uniqueEmails.has(emailKey)) continue;
-                    
-                    uniqueEmails.add(emailKey);
-                    
-                    // Ensure consistent field names and formats
-                    this.normalizeAccount(account);
-                    
-                    processed.push(account);
-                }
-                
-                return processed;
-            }
-            
-            // Normalize account fields for consistency
-            normalizeAccount(account) {
-                // Ensure all accounts have the same set of fields
-                const requiredFields = ['email', 'password', 'plan', 'expireDate', 'daysLeft', 'autoRenew', 'paymentMethod'];
-                
-                for (const field of requiredFields) {
-                    if (account[field] === undefined) {
-                        // Set default values for missing fields
-                        if (field === 'autoRenew') {
-                            account[field] = false;
-                            // Initialize the explicit flag when normalizing
-                            account.autoRenewExplicit = false;
-                        } else if (field !== 'email' && field !== 'password') {
-                            account[field] = null;
-                        }
-                    }
-                }
-                
-                // Ensure autoRenewExplicit is set even if autoRenew is already defined
-                if (account.autoRenewExplicit === undefined) {
-                    account.autoRenewExplicit = false;
-                }
-                
-                // Normalize autoRenew to be a boolean
-                if (typeof account.autoRenew === 'string') {
-                    account.autoRenew = account.autoRenew.toLowerCase() === 'true';
-                }
-                
-                return account;
-            }
-            
-            // Evaluate the quality of parsing results
-            evaluateResultQuality(accounts, originalInput) {
-                if (!accounts || accounts.length === 0) return 0;
-                
-                let quality = 0;
-                
-                // Count how many emails from the original input were found
-                const emailPattern = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/g;
-                const allEmails = [...originalInput.matchAll(emailPattern)].map(m => m[1].toLowerCase());
-                const uniqueEmails = new Set(allEmails);
-                
-                // Count how many unique emails we found
-                let foundEmails = 0;
-                for (const account of accounts) {
-                    if (uniqueEmails.has(account.email.toLowerCase())) {
-                        foundEmails++;
-                    }
-                }
-                
-                // Base quality on percentage of emails found
-                quality += (foundEmails / uniqueEmails.size) * 50;
-                
-                // Add points for completeness of fields
-                let fieldCompleteness = 0;
-                const importantFields = ['email', 'password', 'plan', 'expireDate', 'autoRenew'];
-                
-                for (const account of accounts) {
-                    let accountCompleteness = 0;
-                    for (const field of importantFields) {
-                        if (account[field] !== undefined && account[field] !== null) {
-                            accountCompleteness++;
-                        }
-                    }
-                    fieldCompleteness += accountCompleteness / importantFields.length;
-                }
-                
-                // Average field completeness across all accounts
-                quality += (fieldCompleteness / accounts.length) * 50;
-                
-                return quality;
-            }
-            
-            // Format the output for display
+
             formatOutput(accounts) {
                 if (!accounts || accounts.length === 0) {
-                    return 'No accounts found to format';
+                    return 'No scrolls found in the void.';
                 }
                 
                 let output = '';
-                
                 accounts.forEach((account, index) => {
-                    // Add separator between accounts
-                    if (index > 0) {
-                        output += '\n\n' + '—'.repeat(30) + '\n\n';
+                    if (index > 0) output += '\n\n' + '🔮✨'.repeat(15) + '\n\n'; // Thematic separator
+
+                    // Email and Password are always first
+                    if (account.email) {
+                        output += `${this.fieldEmojis.email} Email: ${account.email}\n`;
+                    } else {
+                        output += `${this.fieldEmojis.email} Email: [Not Found]\n`;
                     }
-                    
-                    // Format email
-                    output += `📧 ${account.email}\n`;
-                    
-                    // Format password
-                    output += `Password: \`${account.password}\`\n`;
-                    
-                    // Track if we've added any fields after password
-                    let fieldsAdded = false;
-                    
-                    // Format plan
-                    if (account.plan) {
-                        output += `🗓 Plan = ${account.plan}\n`;
-                        fieldsAdded = true;
+                    if (account.password) {
+                         output += `${this.fieldEmojis.password} Password: \`${account.password}\`\n`;
+                    } else {
+                        output += `${this.fieldEmojis.password} Password: [Not Found]\n`;
                     }
-                    
-                    // Format expiration date
-                    if (account.expireDate) {
-                        output += `⏳ ExpireDate = ${account.expireDate}\n`;
-                        fieldsAdded = true;
+
+                    const displayedFields = new Set(['email', 'password']);
+
+                    // Display fields in preferred order
+                    for (const fieldKey of this.fieldOrder) {
+                        if (account.hasOwnProperty(fieldKey) && account[fieldKey] !== null && account[fieldKey] !== undefined && !displayedFields.has(fieldKey)) {
+                            const emoji = this.fieldEmojis[fieldKey] || this.fieldEmojis.default;
+                            let value = account[fieldKey];
+                            // Capitalize first letter of fieldKey for display
+                            const keyDisplay = fieldKey.charAt(0).toUpperCase() + fieldKey.slice(1).replace(/([A-Z])/g, ' $1').trim();
+
+
+                            if (fieldKey === 'autoRenew') {
+                                if (account.autoRenewExplicit) { // Only display if explicitly found or derived
+                                    output += `${emoji} ${keyDisplay}: ${value ? '✅ Yes' : '❌ No'}\n`;
+                                }
+                            } else if (typeof value === 'boolean') {
+                                output += `${emoji} ${keyDisplay}: ${value ? '✅ Yes' : '❌ No'}\n`;
+                            } else {
+                                output += `${emoji} ${keyDisplay}: ${value}\n`;
+                            }
+                            displayedFields.add(fieldKey);
+                        }
                     }
-                    
-                    // Format days left
-                    if (account.daysLeft) {
-                        output += `⏳ DaysLeft = ${account.daysLeft}\n`;
-                        fieldsAdded = true;
-                    }
-                    
-                    // Format auto renew - ONLY if it was explicitly provided in the input
-                    if (account.autoRenewExplicit === true) {
-                        const autoRenewSymbol = account.autoRenew ? '✅' : '❌';
-                        output += `AutoRenew: ${autoRenewSymbol}\n`;
-                        fieldsAdded = true;
-                    }
-                    
-                    // Format payment method
-                    if (account.paymentMethod) {
-                        let paymentEmoji = '💳'; // Default
-                        
-                        // Look up the emoji for this payment method
-                        for (const [method, emoji] of Object.entries(this.paymentMethods)) {
-                            if (account.paymentMethod.includes(method)) {
-                                paymentEmoji = emoji;
-                                break;
+
+                    // Display any remaining fields not in preferred order
+                    for (const fieldKey in account) {
+                        if (account.hasOwnProperty(fieldKey) && !displayedFields.has(fieldKey) && account[fieldKey] !== null && account[fieldKey] !== undefined) {
+                            const emoji = this.fieldEmojis[fieldKey] || this.fieldEmojis.default;
+                            let value = account[fieldKey];
+                            const keyDisplay = fieldKey.charAt(0).toUpperCase() + fieldKey.slice(1).replace(/([A-Z])/g, ' $1').trim();
+
+                            if (typeof value === 'boolean') {
+                                output += `${emoji} ${keyDisplay}: ${value ? '✅ Yes' : '❌ No'}\n`;
+                            } else {
+                                output += `${emoji} ${keyDisplay}: ${value}\n`;
                             }
                         }
-                        
-                        output += `${paymentEmoji} PaymentMethod = ${account.paymentMethod}`;
-                        // Add a newline if this is not the last field (though it typically would be)
-                        if (!fieldsAdded) {
-                            output += '\n';
-                        }
                     }
+                     // Remove last newline if any to prevent empty line at the end of an entry
+                    output = output.trimEnd() + '\n';
                 });
-                
-                return output;
+                return output.trim(); // Trim final newline from the whole output
             }
         }
         
-        // Formatter logic
+        const formatterInstance = new UltraFormatter(); // Create a single instance
+
+        function populateLegend() {
+            const legendContainer = document.getElementById('legend-items-container');
+            legendContainer.innerHTML = ''; // Clear existing
+            const { fieldEmojis, fieldOrder } = formatterInstance; // Use instance properties
+
+            // Create a set of field keys that have emojis to avoid duplicates from fieldOrder and fieldEmojis keys
+            const legendFields = new Set([...fieldOrder, ...Object.keys(fieldEmojis)]);
+
+            for (const fieldKey of legendFields) {
+                if (fieldEmojis[fieldKey] && fieldKey !== 'default' && fieldKey !== 'password') { // Password has specific legend entry
+                    const legendItem = document.createElement('div');
+                    legendItem.className = 'legend-item';
+                    const keyDisplay = fieldKey.charAt(0).toUpperCase() + fieldKey.slice(1).replace(/([A-Z])/g, ' $1').trim();
+                    
+                    legendItem.innerHTML = `
+                        <span class="emoji-legend">${fieldEmojis[fieldKey]}</span>
+                        <span>${keyDisplay}</span>
+                    `;
+                    legendContainer.appendChild(legendItem);
+                }
+            }
+             // Add fixed legend items
+            const fixedItems = [
+                { iconClass: 'fas fa-key', text: 'Password in `monospace`' },
+                { iconClass: 'fas fa-check-circle', text: '✅ Yes / True' },
+                { iconClass: 'fas fa-times-circle', text: '❌ No / False' },
+                { emoji: '🔹', text: 'Other Fields' }
+            ];
+
+            fixedItems.forEach(item => {
+                const legendItem = document.createElement('div');
+                legendItem.className = 'legend-item';
+                if (item.iconClass) {
+                    legendItem.innerHTML = `<i class="${item.iconClass}"></i><span>${item.text}</span>`;
+                } else if (item.emoji) {
+                     legendItem.innerHTML = `<span class="emoji-legend">${item.emoji}</span><span>${item.text}</span>`;
+                }
+                legendContainer.appendChild(legendItem);
+            });
+        }
+
+
         document.getElementById('format-btn').addEventListener('click', async function() {
-            const inputData = document.getElementById('input-data').value.trim();
-            if (!inputData) {
-                showNotification('Please enter some data to format', 'error');
+            const inputData = document.getElementById('input-data').value; // Keep leading/trailing spaces for lines
+            if (!inputData.trim()) {
+                showNotification('The cauldron is empty! Add some glyphs.', 'error');
                 return;
             }
             
-            // Show processing indicator
             const processingIndicator = document.getElementById('processing-indicator');
             processingIndicator.classList.add('active');
-            
-            // Update status badge
             const statusBadge = document.getElementById('status-badge');
-            statusBadge.textContent = 'Processing...';
+            statusBadge.textContent = 'Transmuting...';
             
-            // Get formatter options from settings
-            const options = {
+            formatterInstance.setOptions({
                 aggressiveParsing: document.getElementById('aggressive-parsing').checked,
                 multiStrategy: document.getElementById('multi-strategy').checked,
                 deepInspection: document.getElementById('deep-inspection').checked,
                 errorRecovery: document.getElementById('error-recovery').checked,
-                removeTags: document.getElementById('remove-tags').checked
-            };
+                removeTags: document.getElementById('remove-tags').checked,
+                removeLineArtifacts: document.getElementById('remove-line-artifacts').checked
+            });
             
-            // Get custom removal patterns from the settings
             const patternInputs = document.querySelectorAll('.pattern-input');
             const customPatterns = Array.from(patternInputs)
                 .map(input => input.value.trim())
                 .filter(pattern => pattern.length > 0);
-            
-            // Create formatter instance
-            const formatter = new UltraFormatter();
-            formatter.setOptions(options);
-            
-            // Set custom patterns if provided
-            if (customPatterns.length > 0) {
-                formatter.setRemovalPatterns(customPatterns);
-            }
+            formatterInstance.setRemovalPatterns(customPatterns);
             
             try {
-                // Format the data
-                const result = await formatter.format(inputData);
+                // Introduce a small delay to ensure UI update for spinner
+                await new Promise(resolve => setTimeout(resolve, 50));
+
+                const result = await formatterInstance.format(inputData);
                 
-                // Update output
                 if (result.success) {
                     document.getElementById('output-result').textContent = result.result;
-                    showNotification(`${result.message}`, 'success');
-                    statusBadge.textContent = `Success (${result.accounts.length} accounts)`;
+                    showNotification(result.message, 'success');
+                    statusBadge.textContent = `Success (${result.accounts.length} scrolls)`;
                 } else {
-                    document.getElementById('output-result').textContent = 'Formatting failed: ' + result.message;
+                    document.getElementById('output-result').textContent = 'Transmutation failed: ' + result.message;
                     showNotification(result.message, 'error');
-                    statusBadge.textContent = 'Failed';
+                    statusBadge.textContent = 'Mishap!';
                 }
-                
-                // Scroll to output
-                document.querySelector('.output-card').scrollIntoView({ behavior: 'smooth' });
+                document.querySelector('.output-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
             } catch (error) {
-                console.error('Error formatting data:', error);
-                document.getElementById('output-result').textContent = 'An error occurred: ' + error.message;
+                console.error('Error in formatting spell:', error);
+                document.getElementById('output-result').textContent = 'A powerful curse befell the process: ' + error.message;
                 showNotification('Error: ' + error.message, 'error');
-                statusBadge.textContent = 'Error';
+                statusBadge.textContent = 'Cursed!';
             } finally {
-                // Hide processing indicator
                 processingIndicator.classList.remove('active');
             }
         });
         
         document.getElementById('clear-btn').addEventListener('click', function() {
             document.getElementById('input-data').value = '';
-            document.getElementById('output-result').textContent = 'Your magical formatted output will appear here...';
-            showNotification('Input cleared!', 'success');
-            
-            // Reset status badge
-            document.getElementById('status-badge').textContent = 'Ready';
+            document.getElementById('output-result').textContent = 'Your magically formatted output will appear here...';
+            showNotification('Cauldron cleared!', 'success');
+            document.getElementById('status-badge').textContent = 'Awaiting Glyphs';
         });
         
         document.getElementById('copy-btn').addEventListener('click', function() {
             const outputText = document.getElementById('output-result').textContent;
-            if (outputText === 'Your magical formatted output will appear here...') {
-                showNotification('Nothing to copy yet!', 'error');
+            if (outputText === 'Your magically formatted output will appear here...' || outputText.startsWith('No scrolls found')) {
+                showNotification('Naught to copy from the void!', 'error');
                 return;
             }
-            
             navigator.clipboard.writeText(outputText)
-                .then(() => showNotification('Copied to clipboard!', 'success'))
-                .catch(err => showNotification('Failed to copy: ' + err, 'error'));
+                .then(() => showNotification('Copied to your Grimoire!', 'success'))
+                .catch(err => showNotification('A copying ward failed: ' + err, 'error'));
         });
         
-        // Portal activation
         document.getElementById('portal-button').addEventListener('click', function(e) {
-            // Prevent instant navigation
             e.preventDefault();
-            
-            // Create URL to navigate to
-            const portalUrl = 'https://github.com/Darkphoenixir';
-            
-            // Activate portal effects
+            const portalUrl = this.href;
             document.body.classList.add('portal-active');
-            
-            // Create additional magical particles
-            for (let i = 0; i < 20; i++) {
-                createMagicalParticle();
-            }
-            
-            // Navigate after animation completes
-            setTimeout(function() {
+            for (let i = 0; i < 20; i++) createMagicalParticle();
+            setTimeout(() => {
                 window.open(portalUrl, '_blank');
-                // Reset effects after a moment
-                setTimeout(function() {
-                    document.body.classList.remove('portal-active');
-                }, 500);
+                setTimeout(() => document.body.classList.remove('portal-active'), 500);
             }, 2000);
         });
         
-        // Create magical particles for portal effect
-        function createMagicalParticle() {
-            const particle = document.createElement('div');
-            particle.className = 'particle portal-particle';
-            particle.style.left = `${Math.random() * 100}%`;
-            particle.style.top = `${Math.random() * 100}%`;
-            particle.style.opacity = `${Math.random() * 0.7 + 0.3}`;
-            particle.style.width = `${Math.random() * 10 + 5}px`;
-            particle.style.height = particle.style.width;
-            particle.style.background = `hsl(${260 + Math.random() * 60}, 100%, 70%)`;
-            particle.style.boxShadow = `0 0 ${Math.random() * 10 + 5}px ${particle.style.background}`;
-            particle.style.zIndex = '15';
-            
-            document.getElementById('particles').appendChild(particle);
-            
-            // Remove particle after animation
-            setTimeout(() => {
-                if (particle.parentNode) {
-                    particle.parentNode.removeChild(particle);
-                }
-            }, 2500);
-        }
+        function createMagicalParticle() { /* ... (same as before) ... */ }
         
         function showNotification(message, type) {
             const notification = document.getElementById('notification');
             notification.textContent = message;
-            notification.className = `notification ${type}`;
-            notification.classList.add('show');
+            notification.className = `notification ${type} show`; // Add show directly
+            
+            // Force reflow to restart animation if it was already shown
+            void notification.offsetWidth; 
             
             setTimeout(() => {
                 notification.classList.remove('show');
-            }, 3000);
+            }, 3500); // Slightly longer display
         }
 
-        // Properly handle remove pattern button
         document.body.addEventListener('click', function(e) {
-            // Check if the clicked element is a remove-pattern button
-            if (e.target.classList.contains('remove-pattern') || 
-                (e.target.parentElement && e.target.parentElement.classList.contains('remove-pattern'))) {
-                
-                // Get the pattern field to remove
-                const patternField = e.target.closest('.pattern-field');
-                if (patternField) {
-                    patternField.remove();
-                }
+            const removeButton = e.target.closest('.remove-pattern');
+            if (removeButton) {
+                const patternField = removeButton.closest('.pattern-field');
+                if (patternField) patternField.remove();
             }
         });
     </script>
